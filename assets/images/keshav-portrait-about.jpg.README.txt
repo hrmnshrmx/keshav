@@ -1,0 +1,15 @@
+# PLACEHOLDER IMAGE - REPLACE THIS FILE
+
+This is a placeholder for Keshav Sharma's about section portrait.
+
+**ACTION REQUIRED:** Replace this file with the actual photo of Keshav working.
+
+## Requirements:
+- Filename: keshav-portrait-about.jpg
+- Recommended dimensions: 500 x 625px (4:5 aspect ratio)
+- Format: JPG (or WebP for better performance)
+- Quality: Photo of Keshav working on animation projects
+
+This image shows Keshav in a working context, suitable for the about section.
+
+After replacing, delete this .README.txt file.

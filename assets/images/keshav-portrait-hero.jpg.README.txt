@@ -1,0 +1,15 @@
+# PLACEHOLDER IMAGE - REPLACE THIS FILE
+
+This is a placeholder for Keshav Sharma's hero portrait.
+
+**ACTION REQUIRED:** Replace this file with the actual portrait image.
+
+## Requirements:
+- Filename: keshav-portrait-hero.jpg
+- Recommended dimensions: 800 x 1000px (3:4 aspect ratio)
+- Format: JPG (or WebP for better performance)
+- Quality: High resolution, professional/editorial photo of Keshav Sharma
+
+The image should show Keshav Sharma in a natural, professional pose suitable for a creative portfolio hero section.
+
+After replacing, delete this .README.txt file.

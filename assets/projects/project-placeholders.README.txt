@@ -1,0 +1,20 @@
+# PROJECT THUMBNAIL PLACEHOLDERS
+
+The following project thumbnail images need to be replaced with Keshav's actual work:
+
+## Files to replace:
+1. character-animation.jpg - Character Animation project
+2. anime-edit.jpg - Anime Edit & Motion Graphics project
+3. product-animation.jpg - Product Animation project
+4. title-sequence.jpg - Cinematic Title Sequence project
+5. explainer-animation.jpg - Explainer Animation project
+6. short-film.jpg - Short Film / Animated Scene project
+
+## Requirements:
+- Recommended dimensions: 600 x 375px (16:10 aspect ratio)
+- Format: JPG or WebP
+- High quality preview/thumbnail of each project
+
+Update project titles, descriptions, and tags in index.html to match actual work.
+
+After replacing, delete this .README.txt file.
