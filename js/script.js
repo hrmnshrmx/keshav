@@ -48,23 +48,31 @@ if (navToggle && navMenu) {
     });
 }
 
-// Theme Toggle (Optional but implemented)
+// Theme Toggle
 const themeToggle = document.getElementById('themeToggle');
 const sunIcon = document.querySelector('.theme-toggle__icon--sun');
 const moonIcon = document.querySelector('.theme-toggle__icon--moon');
 
-if (themeToggle) {
-    // Check for saved theme preference or default to dark
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    
-    if (currentTheme === 'light') {
+function updateThemeIcons(theme) {
+    if (theme === 'light') {
         if (sunIcon) sunIcon.style.display = 'none';
         if (moonIcon) moonIcon.style.display = 'block';
+        if (themeToggle) themeToggle.setAttribute('aria-label', 'Switch to dark theme');
     } else {
         if (sunIcon) sunIcon.style.display = 'block';
         if (moonIcon) moonIcon.style.display = 'none';
+        if (themeToggle) themeToggle.setAttribute('aria-label', 'Switch to light theme');
     }
+}
+
+if (themeToggle) {
+    // Initialize theme from localStorage or system preference
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    
+    document.documentElement.setAttribute('data-theme', initialTheme);
+    updateThemeIcons(initialTheme);
     
     themeToggle.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
@@ -72,15 +80,25 @@ if (themeToggle) {
         
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-        
-        if (newTheme === 'light') {
-            if (sunIcon) sunIcon.style.display = 'none';
-            if (moonIcon) moonIcon.style.display = 'block';
-        } else {
-            if (sunIcon) sunIcon.style.display = 'block';
-            if (moonIcon) moonIcon.style.display = 'none';
-        }
+        updateThemeIcons(newTheme);
     });
+    
+    // Listen for system theme changes
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                const newTheme = e.matches ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                updateThemeIcons(newTheme);
+            }
+        });
+    }
+} else {
+    // If toggle doesn't exist, ensure theme is applied from localStorage
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', initialTheme);
 }
 
 // Smooth scroll for anchor links (additional to CSS scroll-behavior)
