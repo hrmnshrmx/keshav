@@ -123,12 +123,26 @@
        STICKY HEADER STATE + SCROLL PROGRESS + ACTIVE NAV LINK
        ====================================================================== */
     var scrollProgress = document.getElementById('scrollProgress');
-    var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav__link[href^="#"]'));
-    var sections = navLinks
+    // Pair each nav link with its section, then sort by real page position.
+    // Nav order (About, Creations, Process…) differs from page order
+    // (Tools, Creations, About…), so we must use document order here.
+    var navPairs = Array.prototype.slice.call(document.querySelectorAll('.nav__link[href^="#"]'))
         .map(function (link) {
-            return document.querySelector(link.getAttribute('href'));
+            return { link: link, section: document.querySelector(link.getAttribute('href')) };
         })
-        .filter(Boolean);
+        .filter(function (pair) {
+            return pair.section;
+        })
+        .sort(function (a, b) {
+            var pos = a.section.compareDocumentPosition(b.section);
+            if (pos & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+            if (pos & Node.DOCUMENT_POSITION_PRECEDING) return 1;
+            return 0;
+        });
+
+    var sections = navPairs.map(function (pair) {
+        return pair.section;
+    });
 
     var ticking = false;
     var lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -164,17 +178,30 @@
             scrollProgress.style.width = (ratio * 100) + '%';
         }
 
-        // Active section: the last one whose top has passed the header line
+        // Active section: in page order, the last section whose top has
+        // passed the header line. Everything before the first section counts
+        // as the hero, so no link is active there.
         var offset = (header ? header.offsetHeight : 70) + 24;
-        var activeIndex = -1;
-        sections.forEach(function (section, index) {
-            if (section.getBoundingClientRect().top - offset <= 0) {
-                activeIndex = index;
+        var activeSection = null;
+        var activeTop = -Infinity;
+
+        sections.forEach(function (section) {
+            var top = section.getBoundingClientRect().top - offset;
+            if (top <= 0 && top > activeTop) {
+                activeTop = top;
+                activeSection = section;
             }
         });
 
-        navLinks.forEach(function (link, index) {
-            link.classList.toggle('is-active', index === activeIndex);
+        // Special case: once the contact/footer area is reached, highlight
+        // the last nav item even if the section top is still just below.
+        var nearBottom = window.innerHeight + scrollTop >= document.documentElement.scrollHeight - 2;
+        if (nearBottom && sections.length) {
+            activeSection = sections[sections.length - 1];
+        }
+
+        navPairs.forEach(function (pair) {
+            pair.link.classList.toggle('is-active', pair.section === activeSection);
         });
 
         ticking = false;
