@@ -77,6 +77,8 @@
         if (!navMenu || !navToggle) return;
         navMenu.classList.toggle('is-open', open);
         navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        // Never leave the header hidden behind an open menu
+        if (open && header) header.classList.remove('is-hidden');
         var bars = navToggle.querySelectorAll('.nav__toggle-bar');
         if (bars.length === 3) {
             bars[0].style.transform = open ? 'translateY(6px) rotate(45deg)' : 'none';
@@ -129,13 +131,32 @@
         .filter(Boolean);
 
     var ticking = false;
+    var lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
     function onScroll() {
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        var delta = scrollTop - lastScrollTop;
 
         if (header) {
             header.classList.toggle('is-scrolled', scrollTop > 8);
+
+            // Auto-hide: slide the header up when scrolling down, reveal it
+            // when scrolling up. Ignore tiny scroll jitter and never hide
+            // while the mobile menu is open.
+            var menuOpen = navMenu && navMenu.classList.contains('is-open');
+            var scrollingDown = delta > 2;
+            var scrollingUp = delta < -2;
+
+            if (scrollTop <= 8 || menuOpen) {
+                header.classList.remove('is-hidden');
+            } else if (scrollingDown && scrollTop > header.offsetHeight + 40) {
+                header.classList.add('is-hidden');
+            } else if (scrollingUp) {
+                header.classList.remove('is-hidden');
+            }
         }
+
+        lastScrollTop = scrollTop < 0 ? 0 : scrollTop;
 
         if (scrollProgress) {
             var docHeight = document.documentElement.scrollHeight - window.innerHeight;

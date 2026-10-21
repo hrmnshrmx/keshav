@@ -204,7 +204,9 @@ code {
     z-index: 1000;
     background: var(--header-bg);
     border-bottom: 1px solid transparent;
-    transition: border-color var(--t), background-color var(--t), box-shadow var(--t);
+    transition: border-color var(--t), background-color var(--t),
+        box-shadow var(--t), transform 0.4s var(--ease);
+    will-change: transform;
 }
 
 .header.is-scrolled {
@@ -212,6 +214,11 @@ code {
     -webkit-backdrop-filter: blur(14px) saturate(140%);
     border-bottom-color: var(--border);
     box-shadow: 0 8px 30px var(--shadow-soft);
+}
+
+/* Hide the header while scrolling down, reveal it on scroll up */
+.header.is-hidden {
+    transform: translateY(-100%);
 }
 
 .nav {
