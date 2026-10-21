@@ -7,23 +7,28 @@ A premium, cinematic, dark-themed single-page portfolio website for Keshav Sharm
 
 ## Features
 
+- **Custom Brand**: "Keshav" (off-white) + "Sharma" (purple) wordmark with a KS monogram logo, shared by the header and footer
 - **Premium Design**: Dark-first theme with purple accents, editorial typography, and a cohesive design-token system
-- **Typography**: Space Grotesk (headings) + Inter (body/UI), fluid `clamp()` sizing throughout
+- **Typography**: Space Grotesk (headings/branding) + Inter (body/UI/forms), fluid `clamp()` sizing throughout
+- **Signature Motion**: One restrained brand effect — an SVG signature line that draws itself beside the hero label (and in the header), plus a desktop-only pointer glow in the hero
+- **Showreel Section**: "Motion in Every Frame." — 16:9 player with native controls, honestly parked in a "coming soon" state until a real file is added
+- **Behind the Frames**: Four-stage editorial breakdown (Concept → Storyboard → Animation → Final), 4-up on desktop, vertical on mobile
 - **Responsive**: Tested with no horizontal overflow at 320, 360, 375, 390, 430, 768, 1024, 1280 and 1440px
 - **Selected Work Feature**: Asymmetric featured-project block above the gallery
 - **Project Filters**: All Work / Animation / Motion Graphics / Product 3D / Editing (no reload)
 - **Project Details Modal**: Accessible overlay with focus trap, Escape/backdrop close, scroll lock, focus restore
 - **Smooth Animations**: Hero entrance stagger, IntersectionObserver scroll reveals, refined hover states
 - **Theme Toggle**: Genuine dark/light themes, persisted in localStorage, no flash on load. Dark is the default
-- **Contact Form**: Client-side validation, honeypot spam trap, honest status states, configurable endpoint
+- **Contact Form**: Client-side validation, honeypot spam trap, honest status states, optional budget range, configurable endpoint
+- **Back to Top**: Appears after scrolling, smooth-scrolls home, hidden from the tab order while off-screen
 - **Accessibility**: Semantic HTML, ARIA labels, keyboard navigation, visible focus, reduced-motion support
-- **SEO**: Meta tags, Open Graph, Twitter Cards, canonical URL, robots.txt, sitemap.xml
+- **SEO**: Meta tags, Open Graph + Twitter Cards with a custom social preview, canonical URL, robots.txt, sitemap.xml
 - **Performance**: Lazy-loaded below-fold images, explicit dimensions, passive listeners, CSS transforms
 
 ## Fonts
 
-- **Headings / display**: `Space Grotesk` — weights 500, 600, 700
-- **Body / UI**: `Inter` — weights 400, 500, 600
+- **Headings / branding**: `Space Grotesk` — weights 500, 600, 700
+- **Body / UI / forms**: `Inter` — weights 400, 500, 600
 - Loaded from Google Fonts with `display=swap` and sensible system fallbacks.
 
 ## File Structure
@@ -37,9 +42,11 @@ A premium, cinematic, dark-themed single-page portfolio website for Keshav Sharm
 │   └── script.js       # Interactive functionality
 ├── assets/
 │   ├── images/         # Images (portraits, backgrounds)
-│   ├── icons/          # Icons (if needed)
-│   └── projects/       # Project thumbnails
-├── favicon.svg         # Site favicon
+│   ├── projects/       # Project thumbnails
+│   ├── process/        # Behind-the-Frames stage images
+│   ├── video/          # Showreel video (add your own)
+│   └── og-image.svg    # Social sharing preview (1200×630)
+├── favicon.svg         # KS monogram favicon
 ├── robots.txt          # SEO robots file
 ├── sitemap.xml         # SEO sitemap
 └── README.md           # This file
@@ -153,20 +160,61 @@ The form already includes a hidden honeypot field (`companyWebsite`) for basic s
 ### 8. Configure the Default Theme
 Dark is the intentional default for all visitors. Light mode is only applied when a visitor explicitly clicks the toggle (stored in `localStorage`). To change the default, edit the inline script at the top of `index.html` and the `defaultTheme()` function in `js/script.js`.
 
-### 9. Add Real Project Videos (optional)
+### 9. Add the Showreel Video
+The showreel section ships **without a video file**, so it shows a poster frame and an honest "Showreel coming soon" note. It never pretends to play.
+
+To enable real playback, set one value in `js/script.js`:
+
+```javascript
+var SHOWREEL_SRC = 'assets/video/showreel.mp4';
+var SHOWREEL_TYPE = 'video/mp4';   // or 'video/webm'
+```
+
+Recommended: also add `assets/video/showreel.webm` for smaller file sizes and better quality. The `<video>` element already has `controls`, `playsinline` and `preload="none"` — there is no autoplay and no sound until the visitor presses play.
+
+You may also drop a real poster image at `assets/showreel-poster.jpg` (the section falls back to a branded placeholder until then).
+
+### 10. Configure the Availability Status
+The availability line in the hero and contact section makes **no claim by default**. Change it in one place in `js/script.js`:
+
+```javascript
+var AVAILABILITY = {
+    status: 'available',                  // 'unconfirmed' | 'available' | 'booked'
+    unconfirmed: 'Status not confirmed — ask me',
+    available: 'Available for freelance projects',
+    booked: 'Currently booked'
+};
+```
+
+Only set `status: 'available'` once that is actually true.
+
+### 11. Add Real Project Videos (optional)
 The details modal includes a native `<video>` element (`#modalVideo`) that stays hidden until a project has a real video file. Add a `video:` path to a project entry in the `PROJECTS` object in `js/script.js` and wire it into `openModal()`. No fake video URLs are included.
 
 ### Important: Replaceable Placeholders
-The portrait and every project thumbnail reference files that do **not exist yet** in this repo. Until you add them, the site automatically swaps in a branded SVG placeholder (so nothing looks broken). Expected files:
+These files do **not exist yet** in this repo. Until you add them, the site automatically swaps in a branded SVG placeholder (so nothing looks broken):
 
+**Portraits**
 - `assets/images/keshav-portrait-hero.jpg`
 - `assets/images/keshav-portrait-about.jpg`
+
+**Project thumbnails**
 - `assets/projects/character-animation.jpg`
 - `assets/projects/anime-edit.jpg`
 - `assets/projects/product-animation.jpg`
 - `assets/projects/title-sequence.jpg`
 - `assets/projects/explainer-animation.jpg`
 - `assets/projects/short-film.jpg`
+
+**Showreel**
+- `assets/video/showreel.mp4` (or `.webm`) — enable via `SHOWREEL_SRC`
+- `assets/showreel-poster.jpg`
+
+**Behind the Frames stages** (illustrative — do not pass off stock imagery as Keshav's process)
+- `assets/process/concept.jpg`
+- `assets/process/storyboard.jpg`
+- `assets/process/animation.jpg`
+- `assets/process/final.jpg`
 
 Project titles, descriptions and tools live in the `PROJECTS` object in `js/script.js` (used by both the cards' modal and the featured block).
 

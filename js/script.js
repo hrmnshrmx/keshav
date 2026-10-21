@@ -178,6 +178,17 @@
             scrollProgress.style.width = (ratio * 100) + '%';
         }
 
+        // Back to top: appears after a meaningful scroll
+        if (backToTop) {
+            var showBackToTop = scrollTop > 600;
+            if (showBackToTop && backToTop.hidden) {
+                backToTop.hidden = false;
+                // Let the transition run after the element becomes visible
+                void backToTop.offsetWidth;
+            }
+            backToTop.classList.toggle('is-visible', showBackToTop);
+        }
+
         // Active section: in page order, the last section whose top has
         // passed the header line. Everything before the first section counts
         // as the hero, so no link is active there.
@@ -549,6 +560,92 @@
     }
 
     /* ======================================================================
+       SHOWREEL
+       No video file is committed to this repo, so the player stays in a
+       documented "coming soon" state. Set SHOWREEL_SRC to a real file to
+       switch it on — nothing plays until then and we never fake playback.
+       ====================================================================== */
+    var SHOWREEL_SRC = '';          // e.g. 'assets/video/showreel.mp4'
+    var SHOWREEL_TYPE = 'video/mp4';
+
+    var showreelSection = document.querySelector('.showreel');
+    var showreelVideo = document.getElementById('showreelVideo');
+    var showreelPoster = document.getElementById('showreelPoster');
+    var showreelNote = document.getElementById('showreelNote');
+
+    if (showreelSection && showreelVideo && SHOWREEL_SRC) {
+        var source = document.createElement('source');
+        source.src = SHOWREEL_SRC;
+        source.type = SHOWREEL_TYPE;
+        showreelVideo.appendChild(source);
+        showreelVideo.hidden = false;
+        if (showreelPoster) showreelPoster.hidden = true;
+        if (showreelNote) showreelNote.hidden = true;
+        showreelSection.classList.add('showreel--has-video');
+
+        // If the file turns out to be missing, fall back honestly.
+        showreelVideo.addEventListener('error', function () {
+            showreelSection.classList.remove('showreel--has-video');
+            showreelVideo.hidden = true;
+            if (showreelPoster) showreelPoster.hidden = false;
+            if (showreelNote) showreelNote.hidden = false;
+        });
+    }
+
+    /* ======================================================================
+       AVAILABILITY (configurable — makes no claim by default)
+       Change this one object to publish a real status.
+       ====================================================================== */
+    var AVAILABILITY = {
+        status: 'unconfirmed',
+        // Used when status === 'unconfirmed'
+        unconfirmed: 'Status not confirmed — ask me',
+        // Used when status === 'available'
+        available: 'Available for freelance projects',
+        // Used when status === 'booked'
+        booked: 'Currently booked'
+    };
+
+    function applyAvailability() {
+        var status = AVAILABILITY.status;
+        var text = status === 'available'
+            ? AVAILABILITY.available
+            : status === 'booked'
+                ? AVAILABILITY.booked
+                : AVAILABILITY.unconfirmed;
+
+        var contactText = document.getElementById('availabilityText');
+        var pill = document.getElementById('availabilityPill');
+        var dot = document.getElementById('availabilityDot');
+
+        if (contactText) {
+            contactText.textContent = text;
+            contactText.setAttribute('data-status', status);
+        }
+        if (pill) {
+            pill.textContent = text;
+            pill.setAttribute('data-status', status);
+        }
+        if (dot) dot.setAttribute('data-status', status);
+    }
+
+    applyAvailability();
+
+    /* ======================================================================
+       BACK TO TOP
+       ====================================================================== */
+    var backToTop = document.getElementById('backToTop');
+
+    if (backToTop) {
+        backToTop.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: prefersReducedMotion ? 'auto' : 'smooth'
+            });
+        });
+    }
+
+    /* ======================================================================
        IMAGE PLACEHOLDERS
        If a project/portrait file is missing, swap in a branded SVG placeholder
        instead of a broken icon. Paths stay easy to replace.
@@ -695,6 +792,12 @@
             setLoading(true);
 
             var payload = new FormData(contactForm);
+
+            // Budget is optional — include it only when the visitor chose a range
+            var budgetField = document.getElementById('budget');
+            if (budgetField && !budgetField.value) {
+                payload.delete('budget');
+            }
 
             fetch(FORM_ENDPOINT, {
                 method: 'POST',
