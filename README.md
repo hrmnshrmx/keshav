@@ -7,15 +7,24 @@ A premium, cinematic, dark-themed single-page portfolio website for Keshav Sharm
 
 ## Features
 
-- **Premium Design**: Dark theme with purple accents, cinematic typography, and sophisticated layout
-- **Responsive**: Fully responsive across mobile (320px+), tablet, and desktop
-- **Smooth Animations**: Scroll reveal animations, hover effects, and micro-interactions
-- **Accessibility**: Semantic HTML, ARIA labels, keyboard navigation, focus indicators, reduced motion support
-- **SEO Optimized**: Meta tags, Open Graph, Twitter Cards, structured data ready
-- **Performance**: Optimized images, lazy loading, efficient CSS/JS
-- **Contact Form**: Configurable form with client-side validation (ready for Formspree/Netlify)
-- **Theme Toggle**: Optional dark/light mode with localStorage persistence
-- **Mobile Menu**: Accessible hamburger menu with smooth animations
+- **Premium Design**: Dark-first theme with purple accents, editorial typography, and a cohesive design-token system
+- **Typography**: Space Grotesk (headings) + Inter (body/UI), fluid `clamp()` sizing throughout
+- **Responsive**: Tested with no horizontal overflow at 320, 360, 375, 390, 430, 768, 1024, 1280 and 1440px
+- **Selected Work Feature**: Asymmetric featured-project block above the gallery
+- **Project Filters**: All Work / Animation / Motion Graphics / Product 3D / Editing (no reload)
+- **Project Details Modal**: Accessible overlay with focus trap, Escape/backdrop close, scroll lock, focus restore
+- **Smooth Animations**: Hero entrance stagger, IntersectionObserver scroll reveals, refined hover states
+- **Theme Toggle**: Genuine dark/light themes, persisted in localStorage, no flash on load. Dark is the default
+- **Contact Form**: Client-side validation, honeypot spam trap, honest status states, configurable endpoint
+- **Accessibility**: Semantic HTML, ARIA labels, keyboard navigation, visible focus, reduced-motion support
+- **SEO**: Meta tags, Open Graph, Twitter Cards, canonical URL, robots.txt, sitemap.xml
+- **Performance**: Lazy-loaded below-fold images, explicit dimensions, passive listeners, CSS transforms
+
+## Fonts
+
+- **Headings / display**: `Space Grotesk` — weights 500, 600, 700
+- **Body / UI**: `Inter` — weights 400, 500, 600
+- Loaded from Google Fonts with `display=swap` and sensible system fallbacks.
 
 ## File Structure
 
@@ -117,25 +126,49 @@ Update in the contact section:
 - **Location**: Update "To be updated" with actual location if desired
 
 ### 7. Configure Contact Form
-The form is configured for static hosting but needs an endpoint. Choose one option:
+The form ships **without an endpoint**, so it never falsely claims a message was sent — it shows a clear "not connected yet" notice instead.
 
-#### Option A: Formspree (Free)
-1. Go to [formspree.io](https://formspree.io/)
-2. Create a new form and get your endpoint
-3. In `js/script.js`, find `const formEndpoint = '';` and add your endpoint:
+To enable real delivery, set one value in `js/script.js`:
+
 ```javascript
-const formEndpoint = 'https://formspree.io/f/YOUR_FORM_ID';
+var FORM_ENDPOINT = ''; // add your endpoint here
 ```
 
-#### Option B: Netlify Forms
-1. Deploy to Netlify
-2. Add `netlify` attribute to form: `<form class="contact__form" id="contactForm" netlify novalidate>`
-3. Netlify will handle form submissions automatically
+#### Option A: Formspree (Free)
+```javascript
+var FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+```
+
+#### Option B: Cloudflare Worker
+Point it at your Worker URL (recommended if the site is on Cloudflare Pages). The Worker can forward to email or store the message:
+```javascript
+var FORM_ENDPOINT = 'https://your-worker.your-subdomain.workers.dev/contact';
+```
 
 #### Option C: Other Services
-Use any compatible form endpoint. Update `js/script.js` accordingly.
+Any endpoint that accepts `POST` with `multipart/form-data` and returns 2xx works (Netlify Forms, Basin, Getform, etc.).
 
-**Note**: Without an endpoint configured, the form will show a configuration message when submitted.
+The form already includes a hidden honeypot field (`companyWebsite`) for basic spam filtering. Do **not** put private API keys in `js/script.js` — keep secrets in the Worker/endpoint.
+
+### 8. Configure the Default Theme
+Dark is the intentional default for all visitors. Light mode is only applied when a visitor explicitly clicks the toggle (stored in `localStorage`). To change the default, edit the inline script at the top of `index.html` and the `defaultTheme()` function in `js/script.js`.
+
+### 9. Add Real Project Videos (optional)
+The details modal includes a native `<video>` element (`#modalVideo`) that stays hidden until a project has a real video file. Add a `video:` path to a project entry in the `PROJECTS` object in `js/script.js` and wire it into `openModal()`. No fake video URLs are included.
+
+### Important: Replaceable Placeholders
+The portrait and every project thumbnail reference files that do **not exist yet** in this repo. Until you add them, the site automatically swaps in a branded SVG placeholder (so nothing looks broken). Expected files:
+
+- `assets/images/keshav-portrait-hero.jpg`
+- `assets/images/keshav-portrait-about.jpg`
+- `assets/projects/character-animation.jpg`
+- `assets/projects/anime-edit.jpg`
+- `assets/projects/product-animation.jpg`
+- `assets/projects/title-sequence.jpg`
+- `assets/projects/explainer-animation.jpg`
+- `assets/projects/short-film.jpg`
+
+Project titles, descriptions and tools live in the `PROJECTS` object in `js/script.js` (used by both the cards' modal and the featured block).
 
 ## Deployment
 
