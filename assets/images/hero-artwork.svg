@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-label="Temporary character artwork standing in for a portrait of Keshav Sharma">
+  
+  <defs>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="34"/>
+    </filter>
+    <filter id="soft2" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0" result="g"/>
+      <feComponentTransfer in="g" result="faint">
+        <feFuncA type="linear" slope="0.32" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
+    <linearGradient id="vig" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#05040a" stop-opacity="0.55"/>
+      <stop offset="45%" stop-color="#05040a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#05040a" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <defs>
+    <radialGradient id="hpGlow" cx="62%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#a970ff" stop-opacity="0.75"/>
+      <stop offset="55%" stop-color="#6d28d9" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#0b0714" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hpRim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e9dcff"/>
+      <stop offset="40%" stop-color="#a970ff"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
+    </linearGradient>
+    <linearGradient id="hpBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a1c3f"/>
+      <stop offset="100%" stop-color="#120d1e"/>
+    </linearGradient>
+    <clipPath id="hpClip"><rect width="900" height="1200"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#hpClip)">
+    <rect width="900" height="1200" fill="#1a1226"/>
+   <rect width="900" height="1200" fill="url(#vig)"/>
+    <rect width="900" height="1200" fill="url(#hpGlow)"/>
+
+    <!-- backlight arcs (motion trails) -->
+    <g fill="none" stroke="url(#hpRim)" stroke-linecap="round" opacity="0.5">
+      <path d="M120 980 C 90 640, 250 300, 620 210" stroke-width="2" stroke-dasharray="6 12"/>
+      <path d="M170 1010 C 150 700, 300 380, 660 290" stroke-width="1.4" stroke-opacity="0.6"/>
+    </g>
+
+    <!-- head -->
+    <g>
+      <ellipse cx="452" cy="392" rx="132" ry="156" fill="url(#hpBody)"/>
+      <path d="M452 236 c-74 0-132 62-132 156 0 40 8 76 22 106 -34-30-56-76-56-132 0-96 74-166 166-166z" fill="#3b2a58"/>
+      <ellipse cx="452" cy="392" rx="132" ry="156" fill="none" stroke="url(#hpRim)" stroke-opacity="0.55" stroke-width="2"/>
+    </g>
+
+    <!-- shoulders / body -->
+    <g>
+      <path d="M452 560 c-150 0-286 96-320 226 -10 40-16 96-18 160 h676 c-2-64-8-120-18-160 -34-130-170-226-320-226z" fill="url(#hpBody)"/>
+      <path d="M452 560 c-150 0-286 96-320 226" fill="none" stroke="#a970ff" stroke-opacity="0.35" stroke-width="2"/>
+      <path d="M452 560 c150 0 286 96 320 226" fill="none" stroke="#a970ff" stroke-opacity="0.35" stroke-width="2"/>
+      <!-- collar accent -->
+      <path d="M392 566 L452 660 L512 566" fill="none" stroke="#d6c5ff" stroke-opacity="0.6" stroke-width="3" stroke-linejoin="round"/>
+    </g>
+
+    <!-- rim light down the right edge -->
+    <path d="M584 300 c40 40 62 96 62 160 0 66-24 124-66 164" fill="none" stroke="url(#hpRim)" stroke-width="5" stroke-linecap="round" opacity="0.9"/>
+
+    <!-- floating frame markers (editorial / motion language) -->
+    <g stroke="#a970ff" stroke-opacity="0.7" fill="none" stroke-width="2">
+      <path d="M96 150 h44 M96 150 v44"/>
+      <path d="M804 150 h-44 M804 150 v44"/>
+      <path d="M96 1050 h44 M96 1050 v-44"/>
+      <path d="M804 1050 h-44 M804 1050 v-44"/>
+    </g>
+    <circle cx="118" cy="1068" r="4" fill="#a970ff"/>
+    <text x="138" y="1074" fill="#b7aec8" font-family="Inter, Segoe UI, Arial, sans-serif"
+      font-size="17" letter-spacing="3">FRAME 001</text>
+
+    <rect width="900" height="1200" filter="url(#grain)" fill="#808080" style="mix-blend-mode:soft-light" opacity="0.45"/>
+  </g>
+
+  <!-- explicit temporary-asset caption -->
+  <g transform="translate(40,1120)">
+    <rect width="470" height="42" rx="21" fill="#000" fill-opacity="0.5" stroke="#8b5cf6" stroke-opacity="0.6"/>
+    <text x="22" y="27" fill="#d6c5ff" font-family="Inter, Segoe UI, Arial, sans-serif"
+      font-size="15" font-weight="600" letter-spacing="1.4">TEMPORARY ARTWORK &#8212; REPLACE PORTRAIT</text>
+  </g>
+</svg>

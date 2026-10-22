@@ -313,8 +313,9 @@
             category: 'Animation',
             description: 'Bringing characters to life with expressive motion and personality-driven performance.',
             details: 'A character-driven piece focused on believable movement, weight, and expression. The animation explores how small timing choices — pauses, overshoot, anticipation — shape a character\u2019s personality on screen.',
+            process: 'Concept sketches and pose studies, a rough blocking pass to find the timing, then a polish pass on secondary motion and facial expression.',
             tools: ['After Effects', 'Blender'],
-            image: 'assets/projects/character-animation.jpg',
+            image: 'assets/projects/character-animation.svg',
             link: ''
         },
         'anime-edit': {
@@ -322,8 +323,9 @@
             category: 'Editing',
             description: 'Dynamic edits with cinematic transitions and impactful visual storytelling.',
             details: 'A high-energy edit built around rhythmic cutting, beat-synced transitions, and motion graphics layered over the footage to amplify the emotion of each sequence.',
+            process: 'Music-led structure first, then select-and-cut to the beat, then motion graphics and transitions layered on top before a final grade.',
             tools: ['Premiere Pro', 'After Effects'],
-            image: 'assets/projects/anime-edit.jpg',
+            image: 'assets/projects/anime-edit.svg',
             link: ''
         },
         'product-animation': {
@@ -331,8 +333,9 @@
             category: 'Product / 3D',
             description: 'Showcasing products with 3D animation and engaging commercial motion.',
             details: 'A commercial-style product piece using 3D modelling, lighting and camera movement to present a product clearly and attractively, with motion that highlights form and detail.',
+            process: 'Modelling and look-development, lighting studies, camera layout, then render and compositing passes with motion design overlays.',
             tools: ['Cinema 4D', 'After Effects'],
-            image: 'assets/projects/product-animation.jpg',
+            image: 'assets/projects/product-animation.svg',
             link: ''
         },
         'cinematic-title-sequence': {
@@ -340,8 +343,9 @@
             category: 'Motion Graphics',
             description: 'Dramatic opening sequences with impactful typography and motion design.',
             details: 'A title sequence designed to set the tone of a story through typography, transitions, texture and pacing — balancing restraint with dramatic emphasis from the first frame.',
+            process: 'Type exploration and layout studies, motion tests for pacing, then texture, light and transition refinement.',
             tools: ['After Effects', 'Typography'],
-            image: 'assets/projects/title-sequence.jpg',
+            image: 'assets/projects/cinematic-title-sequence.svg',
             link: ''
         },
         'explainer-animation': {
@@ -349,8 +353,9 @@
             category: 'Motion Graphics',
             description: 'Simplifying complex ideas into engaging, clearly structured animated explanations.',
             details: 'An explainer built to make a complex idea easy to follow — combining clear illustration, considered pacing and motion that guides attention through each point.',
+            process: 'Script and structure, illustrated styleframes, storyboarded timing, then asset design and animated build.',
             tools: ['Illustration', 'After Effects'],
-            image: 'assets/projects/explainer-animation.jpg',
+            image: 'assets/projects/explainer-animation.svg',
             link: ''
         },
         'animated-short-film': {
@@ -358,8 +363,9 @@
             category: 'Animation',
             description: 'Narrative-driven animation with emotional storytelling and cinematic pacing.',
             details: 'A narrative animated scene exploring atmosphere, character and emotion through staging, lighting and camera work rather than dialogue.',
+            process: 'Story beats and staging sketches, layout and lighting studies, then animation, effects and final grade.',
             tools: ['Blender', 'Storytelling'],
-            image: 'assets/projects/short-film.jpg',
+            image: 'assets/projects/animated-short-film.svg',
             link: ''
         }
     };
@@ -426,6 +432,9 @@
         lastFocused = trigger || document.activeElement;
 
         if (modalImage) {
+            // Allow a fresh placeholder fallback for this project's image.
+            delete modalImage.dataset.placeholderApplied;
+            modalImage.classList.remove('is-placeholder');
             modalImage.src = project.image;
             modalImage.alt = project.title + ' — project preview';
             modalImage.setAttribute('data-placeholder', project.title);
@@ -447,6 +456,12 @@
                 span.textContent = tool;
                 modalTools.appendChild(span);
             });
+            if (project.process) {
+                var note = document.createElement('span');
+                note.className = 'modal__process';
+                note.textContent = 'Process: ' + project.process;
+                modalTools.appendChild(note);
+            }
         }
 
         if (modalLink) {
@@ -572,6 +587,7 @@
     var showreelVideo = document.getElementById('showreelVideo');
     var showreelPoster = document.getElementById('showreelPoster');
     var showreelNote = document.getElementById('showreelNote');
+    var showreelPlay = document.getElementById('showreelPlay');
 
     if (showreelSection && showreelVideo && SHOWREEL_SRC) {
         var source = document.createElement('source');
@@ -589,6 +605,22 @@
             showreelVideo.hidden = true;
             if (showreelPoster) showreelPoster.hidden = false;
             if (showreelNote) showreelNote.hidden = false;
+        });
+    }
+
+    // Play control. With a real video it starts playback. With no video file it
+    // reveals the honest "temporary preview" note — it never fakes playback.
+    if (showreelPlay) {
+        showreelPlay.addEventListener('click', function () {
+            if (showreelSection && showreelSection.classList.contains('showreel--has-video') && showreelVideo) {
+                var attempt = showreelVideo.play();
+                if (attempt && typeof attempt.catch === 'function') {
+                    attempt.catch(function () { /* autoplay policy — user can use native controls */ });
+                }
+            } else if (showreelNote) {
+                showreelNote.hidden = false;
+                showreelSection && showreelSection.classList.add('showreel--noticed');
+            }
         });
     }
 
@@ -685,6 +717,24 @@
         if (img.complete && img.naturalWidth === 0) {
             swapToPlaceholder(img);
         }
+    });
+
+    /* ======================================================================
+       SERVICE INQUIRY LINKS
+       Each service card links to the contact form and pre-selects the
+       matching Project Type, so an inquiry arrives already qualified.
+       ====================================================================== */
+    var projectTypeSelect = document.getElementById('projectType');
+
+    document.querySelectorAll('.js-service-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+            var service = link.getAttribute('data-service');
+            if (!projectTypeSelect || !service) return;
+            var hasOption = Array.prototype.some.call(projectTypeSelect.options, function (option) {
+                return option.value === service;
+            });
+            if (hasOption) projectTypeSelect.value = service;
+        });
     });
 
     /* ======================================================================

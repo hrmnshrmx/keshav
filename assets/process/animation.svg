@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 675" width="900" height="675" role="img" aria-label="Temporary animation and rigging placeholder">
+  
+  <defs>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="34"/>
+    </filter>
+    <filter id="soft2" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0" result="g"/>
+      <feComponentTransfer in="g" result="faint">
+        <feFuncA type="linear" slope="0.32" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
+    <linearGradient id="vig" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#05040a" stop-opacity="0.55"/>
+      <stop offset="45%" stop-color="#05040a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#05040a" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="675" fill="#0e0a18"/>
+  <path d="M45 0V675M90 0V675M135 0V675M180 0V675M225 0V675M270 0V675M315 0V675M360 0V675M405 0V675M450 0V675M495 0V675M540 0V675M585 0V675M630 0V675M675 0V675M720 0V675M765 0V675M810 0V675M855 0V675M0 45H900M0 90H900M0 135H900M0 180H900M0 225H900M0 270H900M0 315H900M0 360H900M0 405H900M0 450H900M0 495H900M0 540H900M0 585H900M0 630H900" stroke="#cbb6ff" stroke-opacity="0.06" stroke-width="1" fill="none"/>
+  <ellipse cx="450" cy="360" rx="330" ry="220" fill="#7c3aed" opacity="0.22" filter="url(#soft)"/>
+
+  <!-- rig skeleton -->
+  <g stroke="#a970ff" stroke-width="7" stroke-linecap="round" fill="none">
+    <path d="M450 300 V470"/>
+    <path d="M450 340 L340 250 M450 340 L560 250"/>
+    <path d="M340 250 L300 340 M560 250 L600 340"/>
+    <path d="M450 470 L380 600 M450 470 L520 600"/>
+  </g>
+  <g fill="#e9dcff">
+    <circle cx="450" cy="290" r="34"/>
+    <circle cx="340" cy="250" r="12"/><circle cx="560" cy="250" r="12"/>
+    <circle cx="300" cy="340" r="12"/><circle cx="600" cy="340" r="12"/>
+    <circle cx="380" cy="600" r="12"/><circle cx="520" cy="600" r="12"/>
+    <circle cx="450" cy="470" r="16"/>
+  </g>
+  <!-- onion-skin ghosts -->
+  <g fill="#a970ff" opacity="0.18">
+    <circle cx="410" cy="292" r="34"/><circle cx="490" cy="292" r="34"/>
+  </g>
+
+  <!-- keyframe timeline -->
+  <g transform="translate(60,610)">
+    <path d="M0 0 H780" stroke="#8b5cf6" stroke-opacity="0.5" stroke-width="2"/>
+    <path d="M0 -8 v16" stroke="#a970ff" stroke-opacity="0.9" stroke-width="2"/><path d="M65 -8 v16" stroke="#a970ff" stroke-opacity="0.35" stroke-width="2"/><path d="M130 -8 v16" stroke="#a970ff" stroke-opacity="0.35" stroke-width="2"/><path d="M195 -8 v16" stroke="#a970ff" stroke-opacity="0.9" stroke-width="2"/><path d="M260 -8 v16" stroke="#a970ff" stroke-opacity="0.35" stroke-width="2"/><path d="M325 -8 v16" stroke="#a970ff" stroke-opacity="0.35" stroke-width="2"/><path d="M390 -8 v16" stroke="#a970ff" stroke-opacity="0.9" stroke-width="2"/><path d="M455 -8 v16" stroke="#a970ff" stroke-opacity="0.35" stroke-width="2"/><path d="M520 -8 v16" stroke="#a970ff" stroke-opacity="0.35" stroke-width="2"/><path d="M585 -8 v16" stroke="#a970ff" stroke-opacity="0.9" stroke-width="2"/><path d="M650 -8 v16" stroke="#a970ff" stroke-opacity="0.35" stroke-width="2"/><path d="M715 -8 v16" stroke="#a970ff" stroke-opacity="0.35" stroke-width="2"/><path d="M780 -8 v16" stroke="#a970ff" stroke-opacity="0.9" stroke-width="2"/>
+    <path d="M390 -26 v52" stroke="#fff" stroke-width="3"/>
+  </g>
+  <g transform="translate(40,46)">
+    <rect width="199" height="34" rx="17" fill="#000" fill-opacity="0.42" stroke="#8b5cf6" stroke-opacity="0.55"/>
+    <text x="17" y="23" fill="#d6c5ff" font-family="Inter, Segoe UI, Arial, sans-serif"
+      font-size="15" font-weight="600" letter-spacing="1.6">RIG / KEYFRAMES</text>
+  </g>
+  <rect width="900" height="675" filter="url(#grain)" fill="#808080" style="mix-blend-mode:soft-light" opacity="0.45"/>
+</svg>

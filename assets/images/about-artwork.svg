@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Temporary studio artwork standing in for a photo of Keshav Sharma at work">
+  
+  <defs>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="34"/>
+    </filter>
+    <filter id="soft2" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0" result="g"/>
+      <feComponentTransfer in="g" result="faint">
+        <feFuncA type="linear" slope="0.32" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
+    <linearGradient id="vig" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#05040a" stop-opacity="0.55"/>
+      <stop offset="45%" stop-color="#05040a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#05040a" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <defs>
+    <linearGradient id="abWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a1230"/><stop offset="100%" stop-color="#0b0714"/></linearGradient>
+    <linearGradient id="abDesk" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b2a58"/><stop offset="100%" stop-color="#170f28"/></linearGradient>
+    <linearGradient id="abScreen" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#a970ff"/><stop offset="100%" stop-color="#38bdf8"/></linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#abWall)"/>
+  <ellipse cx="600" cy="200" rx="360" ry="260" fill="#7c3aed" opacity="0.25" filter="url(#soft)"/>
+  <path d="M50 0V1000M100 0V1000M150 0V1000M200 0V1000M250 0V1000M300 0V1000M350 0V1000M400 0V1000M450 0V1000M500 0V1000M550 0V1000M600 0V1000M650 0V1000M700 0V1000M750 0V1000M0 50H800M0 100H800M0 150H800M0 200H800M0 250H800M0 300H800M0 350H800M0 400H800M0 450H800M0 500H800M0 550H800M0 600H800M0 650H800M0 700H800M0 750H800M0 800H800M0 850H800M0 900H800M0 950H800" stroke="#cbb6ff" stroke-opacity="0.04" stroke-width="1" fill="none"/>
+
+  <!-- monitor -->
+  <g transform="translate(120,200)">
+    <rect width="560" height="340" rx="14" fill="#0a0714" stroke="#a970ff" stroke-opacity="0.55" stroke-width="2"/>
+    <rect x="18" y="18" width="524" height="304" rx="8" fill="#0f0a1c"/>
+    <!-- timeline UI on screen -->
+    <g transform="translate(46,52)">
+      <rect width="150" height="20" rx="6" fill="url(#abScreen)"/>
+      <rect y="34" width="290" height="14" rx="5" fill="#a970ff" opacity="0.6"/>
+      <rect y="58" width="210" height="14" rx="5" fill="#e879f9" opacity="0.5"/>
+      <rect y="82" width="360" height="14" rx="5" fill="#38bdf8" opacity="0.45"/>
+      <rect y="120" width="440" height="90" rx="8" fill="#a970ff" opacity="0.14"/>
+      <circle cx="200" cy="165" r="26" fill="#7c3aed" opacity="0.75"/>
+      <path d="M120 240 H460" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="2"/>
+      <path d="M250 110 V250" stroke="#fff" stroke-opacity="0.8" stroke-width="2.5"/>
+    </g>
+    <path d="M250 340 v40 h60 v-40" fill="none" stroke="#a970ff" stroke-opacity="0.5" stroke-width="3"/>
+    <rect x="200" y="380" width="160" height="14" rx="7" fill="#3b2a58"/>
+  </g>
+
+  <!-- desk + tablet + stylus -->
+  <path d="M0 720 H800 V1000 H0z" fill="url(#abDesk)"/>
+  <path d="M0 720 H800" stroke="#a970ff" stroke-opacity="0.35" stroke-width="2"/>
+  <g transform="translate(430,760)">
+    <rect width="300" height="200" rx="12" fill="#0f0a1c" stroke="#e879f9" stroke-opacity="0.45" stroke-width="2"/>
+    <g transform="translate(30,30)">
+      <circle cx="60" cy="60" r="42" fill="none" stroke="#a970ff" stroke-width="5"/>
+      <path d="M110 30 q50 30 90 0" fill="none" stroke="#38bdf8" stroke-opacity="0.7" stroke-width="4"/>
+      <path d="M20 130 h180" stroke="#e879f9" stroke-opacity="0.5" stroke-width="8" stroke-linecap="round"/>
+    </g>
+  </g>
+  <g transform="translate(690,740) rotate(24)">
+    <rect width="14" height="150" rx="7" fill="#e9dcff"/>
+    <path d="M0 150 h14 l-7 22z" fill="#a970ff"/>
+  </g>
+
+  <!-- warm practical light -->
+  <circle cx="80" cy="640" r="60" fill="#f59e0b" opacity="0.3" filter="url(#soft)"/>
+  <path d="M80 560 v50" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="4"/>
+
+  <rect width="800" height="1000" filter="url(#grain)" fill="#808080" style="mix-blend-mode:soft-light" opacity="0.45"/>
+  <g transform="translate(40,930)">
+    <rect width="470" height="42" rx="21" fill="#000" fill-opacity="0.5" stroke="#8b5cf6" stroke-opacity="0.6"/>
+    <text x="22" y="27" fill="#d6c5ff" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="1.4">TEMPORARY ARTWORK &#8212; REPLACE STUDIO PHOTO</text>
+  </g>
+</svg>

@@ -11,10 +11,12 @@ A premium, cinematic, dark-themed single-page portfolio website for Keshav Sharm
 - **Premium Design**: Dark-first theme with purple accents, editorial typography, and a cohesive design-token system
 - **Typography**: Space Grotesk (headings/branding) + Inter (body/UI/forms), fluid `clamp()` sizing throughout
 - **Signature Motion**: One restrained brand effect — an SVG signature line that draws itself beside the hero label (and in the header), plus a desktop-only pointer glow in the hero
-- **Showreel Section**: "Motion in Every Frame." — 16:9 player with native controls, honestly parked in a "coming soon" state until a real file is added
-- **Behind the Frames**: Four-stage editorial breakdown (Concept → Storyboard → Animation → Final), 4-up on desktop, vertical on mobile
-- **Responsive**: Tested with no horizontal overflow at 320, 360, 375, 390, 430, 768, 1024, 1280 and 1440px
-- **Selected Work Feature**: Asymmetric featured-project block above the gallery
+- **Layered Temporary Artwork**: Every image is a purpose-built, category-specific SVG illustration (not a repeated placeholder motif), generated reproducibly by `tools/generate-artwork.js` and labelled in-image as temporary
+- **Showreel Section**: "Motion in Every Frame." — 16:9 stage with a prominent play control. With no video file it shows a designed four-discipline artwork collage labelled as a temporary preview, and never fakes playback
+- **Services Section**: Four distinct service cards (Character Animation, Motion Graphics, 3D & Product Animation, Video Editing & Compositing), each with its own visual, description, and an inquiry link that pre-fills the contact form's project type
+- **Editorial Gallery**: One visually dominant featured project, then a 12-column gallery on an alternating 7/5 → 5/7 → 6/6 rhythm with larger thumbnails and a category badge on each
+- **Behind the Frames**: Four-stage image-led sequence (Concept → Storyboard → Animation → Final Render) with a wide opener and full-width finale, followed by a compact 5-step timeline strip
+- **Responsive**: Tested with no horizontal overflow at 320, 360, 390, 430, 768, 1024 and 1440px
 - **Project Filters**: All Work / Animation / Motion Graphics / Product 3D / Editing (no reload)
 - **Project Details Modal**: Accessible overlay with focus trap, Escape/backdrop close, scroll lock, focus restore
 - **Smooth Animations**: Hero entrance stagger, IntersectionObserver scroll reveals, refined hover states
@@ -40,17 +42,31 @@ A premium, cinematic, dark-themed single-page portfolio website for Keshav Sharm
 │   └── style.css       # All styles and responsive design
 ├── js/
 │   └── script.js       # Interactive functionality
+├── tools/
+│   └── generate-artwork.js  # Regenerates the temporary SVG artwork set
 ├── assets/
-│   ├── images/         # Images (portraits, backgrounds)
-│   ├── projects/       # Project thumbnails
-│   ├── process/        # Behind-the-Frames stage images
+│   ├── images/         # Hero + about artwork (replace with real photos)
+│   ├── projects/       # Per-project artwork (replace with real stills)
+│   ├── process/        # Behind-the-Frames stage artwork
+│   ├── services/       # Service card visuals
 │   ├── video/          # Showreel video (add your own)
+│   ├── showreel-collage.svg   # Temporary showreel preview collage
 │   └── og-image.svg    # Social sharing preview (1200×630)
 ├── favicon.svg         # KS monogram favicon
 ├── robots.txt          # SEO robots file
 ├── sitemap.xml         # SEO sitemap
 └── README.md           # This file
 ```
+
+### Regenerating the temporary artwork
+
+The stand-in illustrations are produced by a script, so they are reproducible and easy to swap:
+
+```bash
+node tools/generate-artwork.js
+```
+
+This writes every file listed in the [Asset Manifest](#asset-manifest) below. Editing the script is the quickest way to restyle the whole set consistently.
 
 ## Getting Started
 
@@ -75,48 +91,49 @@ This is a static site with no build tools. Just edit HTML, CSS, and JS files dir
 ## Content Replacement Guide
 
 ### 1. Hero Portrait (Required)
-Replace `assets/images/keshav-portrait-hero.jpg` with Keshav's actual portrait.
-- **Recommended size**: 800x1000px or similar aspect ratio (3:4)
+The hero currently shows a designed character illustration, clearly labelled in-image as temporary artwork. Replace it with Keshav's actual portrait.
+- **Recommended size**: 900x1200px (3:4)
 - **Format**: JPG or WebP
-- **Location**: `assets/images/keshav-portrait-hero.jpg`
-- **Alt text**: Already set to "Keshav Sharma - Animation Designer"
+- **Location**: `assets/images/hero-artwork.svg` (replace the file, or point the `<img src>` in `index.html` at a `.jpg`/`.webp` and update `width`/`height`)
+- **Alt text**: Update the `alt` in `index.html` — it currently explains that the image is temporary artwork
 
 ### 2. About Section Portrait
-Replace `assets/images/keshav-portrait-about.jpg` with another photo of Keshav working.
-- **Recommended size**: 500x625px or 4:5 ratio
-- **Location**: `assets/images/keshav-portrait-about.jpg`
+The About section shows a designed studio-desk illustration, also labelled as temporary.
+- **Recommended size**: 800x1000px (4:5)
+- **Location**: `assets/images/about-artwork.svg`
 
-### 3. Project Thumbnails
-Replace the placeholder images in `assets/projects/`:
-- `character-animation.jpg`
-- `anime-edit.jpg`
-- `product-animation.jpg`
-- `title-sequence.jpg`
-- `explainer-animation.jpg`
-- `short-film.jpg`
+### 3. Project Artwork
+Each project has its own category-specific illustration in `assets/projects/`. Replace with real stills:
+- `character-animation.svg` → a character animation still
+- `anime-edit.svg` → an anime edit / motion graphics still
+- `product-animation.svg` → a 3D or product animation still
+- `cinematic-title-sequence.svg` → a title sequence still
+- `cinematic-title-sequence-wide.svg` → a wide (16:9) crop of the same project, used by the featured block
+- `explainer-animation.svg` → an explainer frame
+- `animated-short-film.svg` → a short film / narrative scene frame
 
 **Recommended specs:**
-- **Size**: 600x375px or 16:10 ratio
+- **Size**: 1200x750px (16:10); the wide featured crop is 1600x900
 - **Format**: JPG or WebP
-- **Keep the filenames** or update paths in `index.html`
+- **Keep the filenames** (swapping the extension is fine) or update the paths in `index.html` **and** in the `PROJECTS` object in `js/script.js`
 
 ### 4. Update Project Information
-Edit the project cards in `index.html` (around line ~200-320):
-```html
-<article class="creation-card">
-    <div class="creation-card__image-container">
-        <img src="assets/projects/your-project.jpg" alt="Your Project Name">
-    </div>
-    <div class="creation-card__content">
-        <h3 class="creation-card__title">Your Project Title</h3>
-        <p class="creation-card__description">Your project description.</p>
-        <div class="creation-card__tags">
-            <span class="creation-card__tag">Tool 1</span>
-            <span class="creation-card__tag">Tool 2</span>
-        </div>
-    </div>
-</article>
+Project titles, descriptions, tools, process notes and image paths all live in the single `PROJECTS` object in `js/script.js` — it feeds the gallery cards, the featured block, and the details modal:
+
+```javascript
+'cinematic-title-sequence': {
+    title: 'Cinematic Title Sequence',
+    category: 'Motion Graphics',
+    description: 'Dramatic opening sequences with impactful typography and motion design.',
+    details: 'Longer copy shown in the details modal.',
+    process: 'Shown in the modal as a short "Process:" line.',
+    tools: ['After Effects', 'Typography'],
+    image: 'assets/projects/cinematic-title-sequence.svg',
+    link: ''            // optional — a live project URL shows an "Open Project" button
+}
 ```
+
+Nothing in that object claims a client, award, testimonial or result, so it is safe to extend as real work arrives.
 
 ### 5. Configure Social Links
 Update social media URLs in both hero and contact sections:
@@ -161,7 +178,7 @@ The form already includes a hidden honeypot field (`companyWebsite`) for basic s
 Dark is the intentional default for all visitors. Light mode is only applied when a visitor explicitly clicks the toggle (stored in `localStorage`). To change the default, edit the inline script at the top of `index.html` and the `defaultTheme()` function in `js/script.js`.
 
 ### 9. Add the Showreel Video
-The showreel section ships **without a video file**, so it shows a poster frame and an honest "Showreel coming soon" note. It never pretends to play.
+The showreel section ships **without a video file**, so it shows a designed four-discipline artwork collage (`assets/showreel-collage.svg`) labelled in the caption as a temporary preview. Pressing the play control reveals the honest note — it never fakes playback.
 
 To enable real playback, set one value in `js/script.js`:
 
@@ -172,7 +189,7 @@ var SHOWREEL_TYPE = 'video/mp4';   // or 'video/webm'
 
 Recommended: also add `assets/video/showreel.webm` for smaller file sizes and better quality. The `<video>` element already has `controls`, `playsinline` and `preload="none"` — there is no autoplay and no sound until the visitor presses play.
 
-You may also drop a real poster image at `assets/showreel-poster.jpg` (the section falls back to a branded placeholder until then).
+Once a real video is set, the poster and the temporary-preview note are hidden automatically and the large play button steps aside for the native controls. You may also drop a real poster at `assets/showreel-collage.svg`'s replacement path and update the `src` in `index.html`.
 
 ### 10. Configure the Availability Status
 The availability line in the hero and contact section makes **no claim by default**. Change it in one place in `js/script.js`:
@@ -191,32 +208,63 @@ Only set `status: 'available'` once that is actually true.
 ### 11. Add Real Project Videos (optional)
 The details modal includes a native `<video>` element (`#modalVideo`) that stays hidden until a project has a real video file. Add a `video:` path to a project entry in the `PROJECTS` object in `js/script.js` and wire it into `openModal()`. No fake video URLs are included.
 
-### Important: Replaceable Placeholders
-These files do **not exist yet** in this repo. Until you add them, the site automatically swaps in a branded SVG placeholder (so nothing looks broken):
+## Asset Manifest
 
-**Portraits**
-- `assets/images/keshav-portrait-hero.jpg`
-- `assets/images/keshav-portrait-about.jpg`
+**Every image currently on the site is temporary artwork.** None of it is stock photography, and none of it is presented as Keshav's finished work. The illustrations are original SVGs, generated by `tools/generate-artwork.js`, and the hero/about/showreel pieces carry a visible in-image "TEMPORARY ARTWORK" label. Replace them with real work using the paths below.
 
-**Project thumbnails**
-- `assets/projects/character-animation.jpg`
-- `assets/projects/anime-edit.jpg`
-- `assets/projects/product-animation.jpg`
-- `assets/projects/title-sequence.jpg`
-- `assets/projects/explainer-animation.jpg`
-- `assets/projects/short-film.jpg`
+### Currently in use (temporary — replace these)
 
-**Showreel**
-- `assets/video/showreel.mp4` (or `.webm`) — enable via `SHOWREEL_SRC`
-- `assets/showreel-poster.jpg`
+| Path | Used for | Size | Replace with |
+|---|---|---|---|
+| `assets/images/hero-artwork.svg` | Hero portrait | 900×1200 | A real 3:4 portrait of Keshav |
+| `assets/images/about-artwork.svg` | About section portrait | 800×1000 | A real 4:5 photo of Keshav working |
+| `assets/showreel-collage.svg` | Showreel preview | 1600×900 | A real showreel poster frame (or enable a video) |
+| `assets/projects/character-animation.svg` | Character Animation card + modal | 1200×750 | A real still from the project |
+| `assets/projects/anime-edit.svg` | Anime Edit & Motion Graphics card + modal | 1200×750 | A real still from the project |
+| `assets/projects/product-animation.svg` | Product Animation card + modal | 1200×750 | A real still from the project |
+| `assets/projects/cinematic-title-sequence.svg` | Title Sequence card + modal | 1200×750 | A real still from the project |
+| `assets/projects/cinematic-title-sequence-wide.svg` | Featured project block | 1600×900 | A wide crop of the same project |
+| `assets/projects/explainer-animation.svg` | Explainer Animation card + modal | 1200×750 | A real still from the project |
+| `assets/projects/animated-short-film.svg` | Short Film card + modal | 1200×750 | A real still from the project |
+| `assets/process/concept.svg` | Stage 01 — Concept | 900×675 | A real moodboard / reference image |
+| `assets/process/storyboard.svg` | Stage 02 — Storyboard | 900×675 | A real storyboard sheet |
+| `assets/process/animation.svg` | Stage 03 — Animation | 900×675 | A real in-progress / rig screenshot |
+| `assets/process/final.svg` | Stage 04 — Final Render | 900×675 | A real final graded frame |
+| `assets/services/character.svg` | Character Animation service card | 400×260 | A real service visual |
+| `assets/services/motion.svg` | Motion Graphics service card | 400×260 | A real service visual |
+| `assets/services/product.svg` | 3D & Product Animation service card | 400×260 | A real service visual |
+| `assets/services/editing.svg` | Video Editing service card | 400×260 | A real service visual |
 
-**Behind the Frames stages** (illustrative — do not pass off stock imagery as Keshav's process)
-- `assets/process/concept.jpg`
-- `assets/process/storyboard.jpg`
-- `assets/process/animation.jpg`
-- `assets/process/final.jpg`
+### Not yet in the repo (add when available)
 
-Project titles, descriptions and tools live in the `PROJECTS` object in `js/script.js` (used by both the cards' modal and the featured block).
+| Path | Purpose | How to enable |
+|---|---|---|
+| `assets/video/showreel.mp4` / `.webm` | The actual showreel | Set `SHOWREEL_SRC` in `js/script.js` |
+
+A real hero/about photo can simply overwrite `assets/images/hero-artwork.svg` and
+`assets/images/about-artwork.svg`, or be added as a `.jpg`/`.webp` next to them with
+the `<img src>` in `index.html` repointed.
+
+Each artwork folder also carries a short `.README.txt` next to the files, naming
+exactly what to drop in and at what size.
+
+### Real files already in the repo
+
+- `assets/og-image.svg` — 1200×630 social sharing preview
+- `favicon.svg` — KS monogram favicon
+
+### Behaviour when an image is missing
+
+Any `<img>` that carries a `data-placeholder` attribute falls back to a branded SVG if the file 404s, so nothing ever renders as a broken icon. The temporary artwork above means that fallback is currently unused.
+
+### Still placeholder (text, not assets)
+
+- **Contact email** — `contact@keshavsharma.in`
+- **Location** — "To be updated"
+- **Social URLs** — point to the platform homepages, not to Keshav's real profiles
+- **Availability** — set `AVAILABILITY.status` in `js/script.js`; the default says the status is unconfirmed rather than claiming availability
+
+Project titles, descriptions, tools and process notes live in the `PROJECTS` object in `js/script.js` (used by both the cards' modal and the featured block).
 
 ## Deployment
 
@@ -251,12 +299,15 @@ Project titles, descriptions and tools live in the `PROJECTS` object in `js/scri
 Edit CSS variables in `css/style.css`:
 ```css
 :root {
-    --bg-primary: #08070D;
-    --primary-purple: #8B5CF6;
-    --bright-accent: #A970FF;
-    /* ... other colors */
+    --bg: #08070d;
+    --surface: #110d19;
+    --accent: #8b5cf6;
+    --accent-bright: #a970ff;
+    --accent-text: #a970ff;   /* accent used as small text — kept AA-legible */
+    /* ... other tokens */
 }
 ```
+The light theme overrides the same variable names under `[data-theme="light"]`.
 
 ### Typography
 Fonts are loaded from Google Fonts (Inter, Manrope, Space Grotesk). To change:
@@ -283,8 +334,8 @@ Fonts are loaded from Google Fonts (Inter, Manrope, Space Grotesk). To change:
 
 ## Notes & Limitations
 - **No Backend**: This is a static site. Form requires external service for email delivery
-- **Placeholders**: Some content uses placeholders (social links, email, location) - replace with real data
-- **Images**: Portrait and project images need to be replaced with actual work
+- **Temporary artwork**: Every image on the site is placeholder artwork, not real work. See the [Asset Manifest](#asset-manifest)
+- **Placeholders**: Social links, email and location are still placeholder values - replace with real data
 - **No Analytics**: Add your own analytics if needed (Google Analytics, Plausible, etc.)
 
 ## License

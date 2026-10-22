@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Temporary cinematic title sequence artwork, wide crop">
+  
+  <defs>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="34"/>
+    </filter>
+    <filter id="soft2" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0" result="g"/>
+      <feComponentTransfer in="g" result="faint">
+        <feFuncA type="linear" slope="0.32" intercept="0"/>
+      </feComponentTransfer>
+    </filter>
+    <linearGradient id="vig" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#05040a" stop-opacity="0.55"/>
+      <stop offset="45%" stop-color="#05040a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#05040a" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <defs>
+    <linearGradient id="wBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0a0714"/><stop offset="100%" stop-color="#241040"/></linearGradient>
+    <linearGradient id="wText" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#a970ff"/><stop offset="100%" stop-color="#e9dcff"/></linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#wBg)"/>
+  <ellipse cx="1080" cy="380" rx="640" ry="380" fill="#7c3aed" opacity="0.28" filter="url(#soft)"/>
+  <ellipse cx="300" cy="700" rx="420" ry="260" fill="#38bdf8" opacity="0.12" filter="url(#soft)"/>
+  <path d="M90 0V900M180 0V900M270 0V900M360 0V900M450 0V900M540 0V900M630 0V900M720 0V900M810 0V900M900 0V900M990 0V900M1080 0V900M1170 0V900M1260 0V900M1350 0V900M1440 0V900M1530 0V900M0 90H1600M0 180H1600M0 270H1600M0 360H1600M0 450H1600M0 540H1600M0 630H1600M0 720H1600M0 810H1600" stroke="#cbb6ff" stroke-opacity="0.04" stroke-width="1" fill="none"/>
+
+  <!-- sweeping light band -->
+  <path d="M-100 640 L1700 180 L1700 300 L-100 760z" fill="#a970ff" opacity="0.12"/>
+  <path d="M-100 660 L1700 200" stroke="#e9dcff" stroke-opacity="0.5" stroke-width="2"/>
+
+  <g transform="translate(800,430)" text-anchor="middle">
+    <text y="-60" fill="#b7aec8" font-family="Inter, Arial, sans-serif" font-size="22" letter-spacing="12">MOTION GRAPHICS &#183; TITLE DESIGN</text>
+    <text y="60" fill="url(#wText)" font-family="'Space Grotesk', Inter, Arial, sans-serif" font-size="150" font-weight="700" letter-spacing="-4">Title Sequence</text>
+    <rect x="-260" y="110" width="520" height="4" fill="#a970ff"/>
+  </g>
+
+  <g stroke="#e9dcff" stroke-opacity="0.45" fill="none" stroke-width="2">
+    <path d="M80 80 h60 M80 80 v60"/><path d="M1520 80 h-60 M1520 80 v60"/>
+    <path d="M80 820 h60 M80 820 v-60"/><path d="M1520 820 h-60 M1520 820 v-60"/>
+  </g>
+  <text x="80" y="864" fill="#81788f" font-family="Inter, Arial, sans-serif" font-size="18" letter-spacing="4">TEMP ARTWORK &#8212; REPLACE WITH REAL STILL</text>
+  <rect width="1600" height="900" filter="url(#grain)" fill="#808080" style="mix-blend-mode:soft-light" opacity="0.45"/>
+</svg>
