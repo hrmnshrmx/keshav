@@ -58,3 +58,8 @@ attributes in `index.html`. Larger originals (1200px+ wide) give the sharpest re
 - `_headers` adds `noindex` to preview deployments (`*.keshav-9ld.pages.dev`) and to repo files.
 - **When a custom domain is connected:** replace `https://keshav-9ld.pages.dev` with the new domain in
   `index.html`, `sitemap.xml` and `robots.txt`, then submit the sitemap in Google Search Console.
+
+## Cache busting
+
+`index.html` and `404.html` load `css/style.css?v=…` and `js/main.js?v=…`. After editing either file, update
+the `v=` value (e.g. `md5sum css/style.css | cut -c1-8`) so phones don't keep an old cached copy.

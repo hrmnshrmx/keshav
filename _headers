@@ -19,8 +19,10 @@ https://:subdomain.keshav-9ld.pages.dev/*
 /assets/*
   Cache-Control: public, max-age=2592000, immutable
 
+# Always revalidate CSS/JS so a new deploy is picked up immediately
+# (index.html also references them with a ?v= content hash).
 /css/*
-  Cache-Control: public, max-age=86400
+  Cache-Control: public, max-age=0, must-revalidate
 
 /js/*
-  Cache-Control: public, max-age=86400
+  Cache-Control: public, max-age=0, must-revalidate
