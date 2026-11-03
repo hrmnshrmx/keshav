@@ -10,11 +10,11 @@
 
   /* ---------- Theme ---------- */
   var themeBtn = $('#themeToggle');
-  var metaTheme = $('meta[name="theme-color"]');
+  var metaThemes = $$('meta[name="theme-color"]');
   function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
     themeBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
-    if (metaTheme) metaTheme.setAttribute('content', theme === 'dark' ? '#07060b' : '#f7f4fc');
+    metaThemes.forEach(function (m) { m.setAttribute('content', theme === 'dark' ? '#07060b' : '#f7f4fc'); });
   }
   applyTheme(root.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
   themeBtn.addEventListener('click', function () {

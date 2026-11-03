@@ -49,3 +49,12 @@ attributes in `index.html`. Larger originals (1200px+ wide) give the sharpest re
 3. Add the **secret key** to the Pages project as a secret named `TURNSTILE_SECRET_KEY`
    (Workers & Pages → keshav → Settings → Variables and secrets → Add → type *Secret*).
 4. Redeploy. The server rejects submissions without a valid captcha once the secret is set.
+
+## SEO
+
+- Title, description, canonical, Open Graph / Twitter tags with a 1200×630 share image (`assets/og-image.jpg`).
+- JSON-LD `@graph`: WebSite, ProfilePage, Person and ProfessionalService (services, Chandigarh location).
+- `sitemap.xml` (with image entries), `robots.txt`, `404.html`, web manifest and app icons.
+- `_headers` adds `noindex` to preview deployments (`*.keshav-9ld.pages.dev`) and to repo files.
+- **When a custom domain is connected:** replace `https://keshav-9ld.pages.dev` with the new domain in
+  `index.html`, `sitemap.xml` and `robots.txt`, then submit the sitemap in Google Search Console.

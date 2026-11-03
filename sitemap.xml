@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://keshav-9ld.pages.dev/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://keshav-9ld.pages.dev/</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image><image:loc>https://keshav-9ld.pages.dev/assets/img/hero.webp</image:loc><image:title>Keshav Sharma, graphic designer in Chandigarh</image:title></image:image>
+    <image:image><image:loc>https://keshav-9ld.pages.dev/assets/img/work-alvora.webp</image:loc><image:title>Alvora Skincare brand identity</image:title></image:image>
+    <image:image><image:loc>https://keshav-9ld.pages.dev/assets/img/work-brew.webp</image:loc><image:title>The Brew House social media campaign</image:title></image:image>
+    <image:image><image:loc>https://keshav-9ld.pages.dev/assets/img/work-urban.webp</image:loc><image:title>Urban Edge magazine cover design</image:title></image:image>
+  </url>
 </urlset>

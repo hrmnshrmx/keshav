@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /migrations/
+Disallow: /README.md
 
 Sitemap: https://keshav-9ld.pages.dev/sitemap.xml
