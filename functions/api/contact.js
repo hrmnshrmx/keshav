@@ -60,6 +60,21 @@ function getDatabase(env) {
   return null;
 }
 
+async function verifyTurnstile(token, secret, ip) {
+  if (!token) return false;
+  const form = new FormData();
+  form.append('secret', secret);
+  form.append('response', token);
+  if (ip) form.append('remoteip', ip);
+  try {
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', body: form });
+    const data = await res.json();
+    return data.success === true;
+  } catch {
+    return false;
+  }
+}
+
 async function sha256(text) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
   return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
@@ -100,6 +115,15 @@ export async function onRequestPost({ request, env }) {
   }
   if (elapsed > MAX_FORM_AGE_MS) {
     return json({ ok: false, error: 'This form has expired. Please refresh the page and try again.' }, 400);
+  }
+
+  // ---- Cloudflare Turnstile (enforced once TURNSTILE_SECRET_KEY is set) ----
+  if (env.TURNSTILE_SECRET_KEY) {
+    const ip = request.headers.get('cf-connecting-ip') || '';
+    const human = await verifyTurnstile(clean(body.turnstileToken, 4096), env.TURNSTILE_SECRET_KEY, ip);
+    if (!human) {
+      return json({ ok: false, error: 'Verification failed. Please complete the captcha and try again.' }, 403);
+    }
   }
 
   // ---- Validation ----

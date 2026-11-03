@@ -402,7 +402,8 @@
             <p class="contact__avail"><span class="pill__dot"></span>Currently booking projects for December</p>
           </div>
 
-          <form class="form" id="contactForm" action="/api/contact" method="post" novalidate>
+          <!-- Cloudflare Turnstile: paste your site key into data-turnstile-sitekey to enable the captcha -->
+          <form class="form" id="contactForm" action="/api/contact" method="post" novalidate data-turnstile-sitekey="">
             <div class="form__row">
               <div class="field">
                 <label for="f-name">Your name <span aria-hidden="true">*</span></label>
@@ -440,6 +441,10 @@
               <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
             </div>
             <input type="hidden" name="startedAt" id="f-started">
+            <div class="captcha" id="captcha" hidden>
+              <div id="turnstile"></div>
+              <small class="field__error" id="captchaError" aria-live="polite"></small>
+            </div>
             <button class="btn btn--primary btn--lg btn--block" type="submit" id="submitBtn">
               <span class="btn__label"><svg class="icon"><use href="#i-send"/></svg> Send Message</span>
               <span class="btn__spinner" aria-hidden="true"></span>

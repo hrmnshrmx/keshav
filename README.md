@@ -41,3 +41,11 @@ npx wrangler pages dev . --d1 DB=local-db
 Drop new files into `assets/img/` with the same names (`hero.webp`, `about.webp`,
 `work-alvora.webp`, `work-brew.webp`, `work-urban.webp`) and update the `width`/`height`
 attributes in `index.html`. Larger originals (1200px+ wide) give the sharpest result.
+
+## Captcha (Cloudflare Turnstile)
+
+1. Cloudflare dashboard → **Turnstile** → **Add widget** (hostname `keshav-9ld.pages.dev`, mode *Managed*).
+2. Paste the **site key** into `data-turnstile-sitekey="..."` on the `<form>` in `index.html`.
+3. Add the **secret key** to the Pages project as a secret named `TURNSTILE_SECRET_KEY`
+   (Workers & Pages → keshav → Settings → Variables and secrets → Add → type *Secret*).
+4. Redeploy. The server rejects submissions without a valid captcha once the secret is set.

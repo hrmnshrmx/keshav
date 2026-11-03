@@ -503,6 +503,8 @@ p { margin: 0; }
 .select select { appearance: none; -webkit-appearance: none; padding-right: 44px; cursor: pointer; }
 .select select:invalid { color: var(--text-3); }
 .select option { color: var(--text); background: var(--surface-solid); }
+.captcha { display: grid; justify-items: start; gap: 6px; min-height: 65px; }
+.captcha[hidden] { display: none; }
 .hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .btn__spinner { display: none; width: 20px; height: 20px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,.35); border-top-color: #fff; animation: spin .8s linear infinite; }
 .btn__label { display: inline-flex; align-items: center; gap: 10px; }

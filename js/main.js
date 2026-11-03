@@ -184,6 +184,34 @@
   var msg = $('#f-msg');
   var counter = $('#msgCounter');
   var started = $('#f-started');
+
+  /* Cloudflare Turnstile (enabled when the form has a site key) */
+  var siteKey = (form.getAttribute('data-turnstile-sitekey') || '').trim();
+  var captchaBox = $('#captcha');
+  var captchaError = $('#captchaError');
+  var widgetId = null;
+  function renderCaptcha() {
+    if (!window.turnstile) return;
+    if (widgetId !== null) { window.turnstile.remove(widgetId); widgetId = null; }
+    widgetId = window.turnstile.render('#turnstile', {
+      sitekey: siteKey,
+      theme: root.getAttribute('data-theme') === 'light' ? 'light' : 'dark',
+      callback: function () { captchaError.textContent = ''; }
+    });
+  }
+  if (siteKey) {
+    captchaBox.hidden = false;
+    window.onTurnstileLoad = renderCaptcha;
+    var ts = document.createElement('script');
+    ts.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad';
+    ts.async = true; ts.defer = true;
+    document.head.appendChild(ts);
+    themeBtn.addEventListener('click', function () { if (widgetId !== null) renderCaptcha(); });
+  }
+  function captchaToken() {
+    return siteKey && window.turnstile && widgetId !== null ? window.turnstile.getResponse(widgetId) || '' : '';
+  }
+  function resetCaptcha() { if (window.turnstile && widgetId !== null) window.turnstile.reset(widgetId); }
   started.value = String(Date.now());
 
   msg.addEventListener('input', function () { counter.textContent = msg.value.length + ' / 2000'; });
@@ -222,6 +250,10 @@
       if (firstBad) firstBad.focus();
       return;
     }
+    if (siteKey && !captchaToken()) {
+      captchaError.textContent = 'Please complete the verification.';
+      return;
+    }
 
     var payload = {
       name: $('#f-name').value.trim(),
@@ -229,6 +261,7 @@
       projectType: typeSelect.value,
       description: msg.value.trim(),
       website: $('#f-website').value,
+      turnstileToken: captchaToken(),
       startedAt: Number(started.value)
     };
 
@@ -266,6 +299,7 @@
         setStatus('error', 'Network error. Please check your connection and try again.');
       })
       .then(function () {
+        resetCaptcha();
         submitBtn.classList.remove('is-loading');
         submitBtn.removeAttribute('aria-busy');
       });
