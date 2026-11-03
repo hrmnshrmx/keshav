@@ -720,9 +720,16 @@ nav.footer__col ul { grid-template-columns: 1fr 1fr; column-gap: 20px; }
 }
 
 @media (max-width: 360px) {
-  .header .brand__text { display: none; }
+  .header .brand__text strong { font-size: 14.5px; }
+  .header .brand__text small { font-size: 11px; }
+  .header__actions { gap: 8px; }
+  .brand { gap: 9px; }
   .hero__clients ul { grid-template-columns: 1fr 1fr; row-gap: 14px; }
   .portrait__badge { width: 88px; height: 88px; }
+}
+
+@media (max-width: 340px) {
+  .header .brand__text { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
