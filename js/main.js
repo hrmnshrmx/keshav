@@ -28,9 +28,29 @@
   var burger = $('#burger');
   var menu = $('#mobileMenu');
 
-  function onScroll() { header.classList.toggle('is-scrolled', window.scrollY > 12); }
+  /* Hide header on scroll down, reveal on scroll up */
+  var lastY = window.scrollY;
+  var ticking = false;
+  function onScroll() {
+    var y = Math.max(window.scrollY, 0);
+    header.classList.toggle('is-scrolled', y > 12);
+    var menuOpen = burger.getAttribute('aria-expanded') === 'true';
+    var focused = header.contains(document.activeElement) && document.activeElement !== document.body;
+    if (y < 120 || menuOpen || focused) {
+      header.classList.remove('is-hidden');
+    } else if (y > lastY + 6) {
+      header.classList.add('is-hidden');
+    } else if (y < lastY - 6) {
+      header.classList.remove('is-hidden');
+    }
+    if (Math.abs(y - lastY) > 6) lastY = y;
+    ticking = false;
+  }
   onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  header.addEventListener('focusin', function () { header.classList.remove('is-hidden'); });
 
   function setMenu(open) {
     burger.setAttribute('aria-expanded', String(open));

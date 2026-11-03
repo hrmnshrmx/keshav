@@ -184,9 +184,11 @@ p { margin: 0; }
   position: fixed; inset: 0 0 auto; z-index: 100;
   height: var(--header-h);
   display: flex; align-items: center;
-  transition: background-color .4s, border-color .4s, backdrop-filter .4s;
+  transition: transform .45s var(--ease), background-color .4s, border-color .4s, backdrop-filter .4s;
+  will-change: transform;
   border-bottom: 1px solid transparent;
 }
+.header.is-hidden { transform: translateY(-100%); }
 .header.is-scrolled { background: var(--header-bg); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); border-color: var(--border); }
 .header__inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 
