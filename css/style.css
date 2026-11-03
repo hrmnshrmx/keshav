@@ -191,14 +191,28 @@ p { margin: 0; }
 .header__inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 
 .brand { display: inline-flex; align-items: center; gap: 12px; }
+/* Monogram: italic serif "KS" on a dark tile with a hairline gradient outline */
 .brand__mark {
-  width: 44px; height: 44px; border-radius: 14px;
+  position: relative;
+  width: 42px; height: 42px; border-radius: 13px;
   display: grid; place-items: center;
-  font: 800 17px/1 var(--font-head); letter-spacing: -.04em; color: #fff;
-  background: var(--grad);
-  box-shadow: 0 8px 24px -8px rgba(139, 92, 246, .9), inset 0 1px 0 rgba(255,255,255,.3);
-  font-style: italic;
+  padding: 0 0 2px 1px;
+  font: italic 400 23px/1 var(--font-serif); letter-spacing: -.03em;
+  color: var(--accent-ink);
+  border: 1.5px solid transparent;
+  background:
+    radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--violet-600) 26%, transparent), transparent 60%) padding-box,
+    linear-gradient(var(--surface-solid), var(--surface-solid)) padding-box,
+    linear-gradient(135deg, #d8b4fe, #8b5cf6 55%, rgba(124, 58, 237, .25)) border-box;
+  box-shadow: 0 10px 26px -14px rgba(139, 92, 246, .9);
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
 }
+.brand__mark::after {
+  content: ""; position: absolute; right: 5px; bottom: 5px;
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--violet-400); box-shadow: 0 0 8px var(--violet-400);
+}
+.brand:hover .brand__mark { transform: rotate(-6deg); box-shadow: 0 14px 30px -12px rgba(139, 92, 246, 1); }
 .brand__text { display: flex; flex-direction: column; line-height: 1.2; }
 .brand__text strong { font: 700 16px/1.2 var(--font-head); letter-spacing: -.02em; }
 .brand__text small { font-size: 12px; color: var(--text-3); }
@@ -666,6 +680,8 @@ nav.footer__col ul { grid-template-columns: 1fr 1fr; column-gap: 20px; }
   :root { --header-h: 68px; }
   .header__cta { display: none; }
   .header .brand__text strong { font-size: 15px; }
+  .header .brand__text small { display: block; font-size: 11.5px; }
+  .brand { gap: 10px; }
   .hero { padding-top: calc(var(--header-h) + 28px); }
   .pill { font-size: 12.5px; padding: 7px 14px 7px 11px; }
   .hero__title { margin-top: 20px; }
