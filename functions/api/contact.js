@@ -21,8 +21,11 @@ const MAX_FORM_AGE_MS = 24 * 3600e3; // stale/replayed forms are rejected
 const RATE_LIMIT = 5;                // submissions per IP …
 const RATE_WINDOW_MIN = 60;          // … per this many minutes
 
+// D1 table that stores submissions (quoted because the name contains a hyphen)
+const TABLE = '"keshav-ct"';
+
 const SCHEMA = [
-  `CREATE TABLE IF NOT EXISTS contact_submissions (
+  `CREATE TABLE IF NOT EXISTS ${TABLE} (
      id INTEGER PRIMARY KEY AUTOINCREMENT,
      name TEXT NOT NULL,
      email TEXT NOT NULL,
@@ -32,8 +35,8 @@ const SCHEMA = [
      ip_hash TEXT,
      user_agent TEXT
    )`,
-  `CREATE INDEX IF NOT EXISTS idx_contact_submissions_ip_created
-     ON contact_submissions (ip_hash, created_at)`,
+  `CREATE INDEX IF NOT EXISTS idx_keshav_ct_ip_created
+     ON ${TABLE} (ip_hash, created_at)`,
 ];
 
 const json = (body, status = 200) =>
@@ -133,7 +136,7 @@ export async function onRequestPost({ request, env }) {
 
     const recent = await db
       .prepare(
-        `SELECT COUNT(*) AS n FROM contact_submissions
+        `SELECT COUNT(*) AS n FROM ${TABLE}
          WHERE ip_hash = ?1 AND created_at > strftime('%Y-%m-%dT%H:%M:%fZ', 'now', ?2)`
       )
       .bind(ipHash, `-${RATE_WINDOW_MIN} minutes`)
@@ -146,7 +149,7 @@ export async function onRequestPost({ request, env }) {
     const userAgent = clean(request.headers.get('user-agent'), 300);
     await db
       .prepare(
-        `INSERT INTO contact_submissions (name, email, project_type, description, created_at, ip_hash, user_agent)
+        `INSERT INTO ${TABLE} (name, email, project_type, description, created_at, ip_hash, user_agent)
          VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)`
       )
       .bind(name, email, projectType, description, createdAt, ipHash, userAgent)

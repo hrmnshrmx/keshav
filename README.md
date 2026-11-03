@@ -20,14 +20,14 @@ _headers, robots.txt, sitemap.xml, favicon.svg
 
 - The function uses the D1 binding named `DB`. If the binding has another name, it finds the
   first D1 binding attached to the Pages project, so the existing connection is reused.
-- The table `contact_submissions` (name, email, project_type, description, created_at, ip_hash,
+- The table `"keshav-ct"` (name, email, project_type, description, created_at, ip_hash,
   user_agent) is created automatically on the first submission. To create it up front:
-  `npx wrangler d1 execute <DATABASE_NAME> --remote --file=migrations/0001_create_contact_submissions.sql`
+  `npx wrangler d1 execute <DATABASE_NAME> --remote --file=migrations/0001_create_keshav_ct.sql`
 - Spam protection: hidden honeypot field, minimum fill time (3 s), form expiry, max 3 links,
   and a limit of 5 submissions per IP (stored as a salted hash) per hour. Set an `IP_SALT`
   environment variable for a private salt.
 - View submissions:
-  `npx wrangler d1 execute <DATABASE_NAME> --remote --command "SELECT * FROM contact_submissions ORDER BY id DESC"`
+  `npx wrangler d1 execute <DATABASE_NAME> --remote --command "SELECT * FROM \"keshav-ct\" ORDER BY id DESC"`
 
 ## Local development
 

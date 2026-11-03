@@ -1,5 +1,5 @@
--- Contact form submissions (also created automatically by functions/api/contact.js)
-CREATE TABLE IF NOT EXISTS contact_submissions (
+-- Contact form submissions table (also created automatically by functions/api/contact.js)
+CREATE TABLE IF NOT EXISTS "keshav-ct" (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
   email TEXT NOT NULL,
@@ -10,5 +10,5 @@ CREATE TABLE IF NOT EXISTS contact_submissions (
   user_agent TEXT
 );
 
-CREATE INDEX IF NOT EXISTS idx_contact_submissions_ip_created
-  ON contact_submissions (ip_hash, created_at);
+CREATE INDEX IF NOT EXISTS idx_keshav_ct_ip_created
+  ON "keshav-ct" (ip_hash, created_at);
