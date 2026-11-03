@@ -18,6 +18,7 @@ _headers, robots.txt, sitemap.xml, favicon.svg
 
 ## Contact form / D1
 
+- `wrangler.toml` binds the D1 database `keshav-db` as `DB` (Pages uses this file as the source of truth for bindings).
 - The function uses the D1 binding named `DB`. If the binding has another name, it finds the
   first D1 binding attached to the Pages project, so the existing connection is reused.
 - The table `"keshav-ct"` (name, email, project_type, description, created_at, ip_hash,

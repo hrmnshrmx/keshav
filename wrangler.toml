@@ -1,0 +1,11 @@
+# Cloudflare Pages configuration for the "keshav" project.
+# Note: when this file exists, Pages uses it as the source of truth for bindings.
+name = "keshav"
+pages_build_output_dir = "."
+compatibility_date = "2026-10-01"
+
+# Contact form database (used by functions/api/contact.js as env.DB)
+[[d1_databases]]
+binding = "DB"
+database_name = "keshav-db"
+database_id = "9c098f4a-022e-4a40-8f37-6322b8eabd9f"
