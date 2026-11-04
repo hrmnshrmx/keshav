@@ -482,10 +482,10 @@ p { margin: 0; }
 
 /* ---------- Process ---------- */
 .steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; counter-reset: s; }
-.steps::before, .steps::after { content: ""; position: absolute; top: 36px; left: 12.5%; right: 12.5%; height: 2px; border-radius: 2px; }
+.steps::before, .steps::after { content: ""; position: absolute; top: 36px; left: 12.5%; right: 12.5%; height: 2px; border-radius: 2px; z-index: 0; }
 .steps::before { background: repeating-linear-gradient(90deg, var(--border-strong) 0 6px, transparent 6px 12px); }
 .steps::after { background: var(--grad); transform-origin: left; transform: scaleX(var(--progress, 0)); transition: transform .2s linear; box-shadow: 0 0 16px var(--glow); }
-.step { position: relative; text-align: center; padding: 0 8px; }
+.step { position: relative; z-index: 1; text-align: center; padding: 0 8px; }
 .step__icon { position: relative; z-index: 1; width: 74px; height: 74px; margin: 0 auto 24px; border-radius: 50%; display: grid; place-items: center; color: var(--accent); background: var(--surface-solid); border: 1px solid var(--border-strong); box-shadow: 0 0 0 8px var(--bg), 0 0 40px -10px var(--glow); transition: all .5s var(--ease); }
 .step__icon svg { width: 28px; height: 28px; }
 .step:hover .step__icon { background: var(--grad); color: #fff; transform: translateY(-4px) rotate(-6deg); }
@@ -738,4 +738,201 @@ nav.footer__col ul { grid-template-columns: 1fr 1fr; column-gap: 20px; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .js .reveal { opacity: 1; transform: none; }
+}
+
+/* =========================================================
+   Interaction layer: progress bar, rotator, cursor, blur-up,
+   active process steps, project viewer, WhatsApp, FAQ
+   ========================================================= */
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ---------- Scroll progress line ---------- */
+.scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 160; pointer-events: none; }
+.scroll-progress span {
+  display: block; height: 100%; width: 100%;
+  transform-origin: 0 50%; transform: scaleX(0);
+  background: linear-gradient(90deg, #6d28d9, #a855f7 55%, #e9d5ff);
+  box-shadow: 0 0 12px rgba(168, 85, 247, .75);
+  border-radius: 0 3px 3px 0;
+  will-change: transform;
+}
+
+/* ---------- Rotating headline word ---------- */
+.hero__for { white-space: nowrap; }
+.hero__for > .accent-serif { font-size: 1.18em; }
+.rotator { display: inline-grid; vertical-align: baseline; }
+.rotator__word {
+  grid-area: 1 / 1;
+  font-family: var(--font-serif); font-style: italic; font-weight: 400;
+  font-size: 1.18em; line-height: .9; letter-spacing: -.02em;
+  background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  padding-right: .08em;
+  opacity: 0; transform: translateY(.42em); filter: blur(6px);
+  transition: opacity .6s var(--ease), transform .7s var(--ease), filter .6s var(--ease);
+}
+.rotator__word.is-active { opacity: 1; transform: none; filter: none; }
+.rotator__word.is-leaving { opacity: 0; transform: translateY(-.42em); filter: blur(6px); }
+
+/* ---------- Custom cursor (mouse / trackpad only) ---------- */
+.cursor { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor, html.has-cursor * { cursor: none !important; }
+  html.has-cursor input, html.has-cursor textarea { cursor: text !important; }
+  html.has-cursor select { cursor: pointer !important; }
+  html.has-cursor .cursor { display: block; }
+}
+.cursor__dot, .cursor__ring { position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none; border-radius: 50%; will-change: transform; }
+.cursor__dot { width: 7px; height: 7px; background: var(--accent); transition: opacity .25s, width .25s, height .25s; }
+.cursor__ring {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border: 1.5px solid color-mix(in srgb, var(--accent) 65%, transparent);
+  transition: width .35s var(--ease), height .35s var(--ease), background-color .35s, border-color .35s, opacity .3s;
+}
+.cursor__label { font: 600 13px/1 var(--font-body); color: #fff; letter-spacing: .02em; opacity: 0; transform: scale(.6); transition: opacity .3s, transform .35s var(--ease); }
+.cursor.is-hover .cursor__ring { width: 56px; height: 56px; background: color-mix(in srgb, var(--violet-500) 14%, transparent); }
+.cursor.is-view .cursor__ring { width: 92px; height: 92px; background: var(--grad); border-color: transparent; box-shadow: 0 12px 30px -10px rgba(139,92,246,.9); }
+.cursor.is-view .cursor__label { opacity: 1; transform: none; }
+.cursor.is-view .cursor__dot { opacity: 0; }
+.cursor.is-down .cursor__ring { width: 30px; height: 30px; }
+.cursor.is-out .cursor__ring, .cursor.is-out .cursor__dot { opacity: 0; }
+
+/* ---------- Blur-up images ---------- */
+.project__media, .about__photo, .portrait__frame, .pmodal__stage {
+  background-color: var(--surface-solid);
+  background-image: linear-gradient(110deg, transparent 30%, color-mix(in srgb, var(--violet-500) 10%, transparent) 50%, transparent 70%);
+  background-size: 250% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+@keyframes shimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+.js img.blur-up { opacity: 0; filter: blur(16px); transition: opacity .8s var(--ease), filter .9s var(--ease), transform 1s var(--ease); }
+.js img.blur-up.is-loaded { opacity: 1; filter: none; }
+
+/* ---------- Process steps light up ---------- */
+.step h3, .step p, .step__num { transition: color .5s var(--ease); }
+.step:not(.is-active) h3 { color: var(--text-2); }
+.step.is-active .step__num { color: var(--accent); }
+.step.is-active .step__icon {
+  background: var(--grad); color: #fff; border-color: transparent;
+  box-shadow: 0 0 0 8px var(--bg), 0 0 44px -6px rgba(139, 92, 246, .95);
+  transform: scale(1.06);
+}
+
+/* ---------- Clickable projects ---------- */
+.project[data-project] { cursor: pointer; }
+.project[data-project]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+/* ---------- Project viewer ---------- */
+body.modal-open { overflow: hidden; }
+.pmodal {
+  padding: 0; border: 0; background: transparent; color: var(--text);
+  width: min(1160px, calc(100vw - 40px)); max-width: none;
+  max-height: calc(100dvh - 40px); overflow: visible;
+}
+.pmodal::backdrop { background: rgba(5, 3, 10, .74); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.pmodal[open] .pmodal__inner { animation: pm-in .55s var(--ease); }
+.pmodal[open]::backdrop { animation: fade-in .4s ease; }
+@keyframes pm-in { from { opacity: 0; transform: translateY(28px) scale(.98); } }
+@keyframes fade-in { from { opacity: 0; } }
+.pmodal__inner {
+  position: relative;
+  display: grid; grid-template-columns: 1.15fr 1fr;
+  max-height: calc(100dvh - 40px);
+  border-radius: 28px; overflow: hidden;
+  background: var(--surface-solid);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 40px 120px -30px rgba(0, 0, 0, .8), 0 0 80px -30px var(--glow);
+}
+.pmodal__close { position: absolute; top: 16px; right: 16px; z-index: 3; background: var(--header-bg); backdrop-filter: blur(12px); }
+.pmodal__media { position: relative; display: flex; flex-direction: column; min-height: 0; background: #0d0a16; }
+.pmodal__stage { flex: 1; min-height: 360px; overflow: hidden; }
+.pmodal__stage img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pmodal__thumbs { display: flex; gap: 8px; padding: 12px; overflow-x: auto; }
+.pmodal__thumbs:empty { display: none; }
+.pmodal__thumbs button { flex: none; width: 64px; height: 48px; border-radius: 10px; overflow: hidden; border: 2px solid transparent; opacity: .6; transition: opacity .3s, border-color .3s; }
+.pmodal__thumbs button[aria-current="true"] { opacity: 1; border-color: var(--accent); }
+.pmodal__thumbs img { width: 100%; height: 100%; object-fit: cover; }
+.pmodal__body { padding: clamp(28px, 4vw, 44px); overflow-y: auto; min-height: 0; }
+.pmodal__body .tag { color: var(--accent-ink); background: color-mix(in srgb, var(--violet-600) 14%, transparent); border-color: var(--border-strong); }
+.pmodal__body h2 { font-size: clamp(28px, 3vw, 40px); margin: 14px 0 20px; padding-right: 48px; }
+.pmodal__meta { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 12px 32px; margin: 0 0 22px; padding: 16px 0; border-block: 1px solid var(--border); }
+.pmodal__meta dt { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); }
+.pmodal__meta dd { margin: 4px 0 0; font-weight: 500; font-size: 14.5px; }
+.pmodal__summary { font: 500 18px/1.55 var(--font-head); letter-spacing: -.01em; }
+.pmodal__body h3 { font: 600 12px/1 var(--font-body); letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin: 26px 0 10px; }
+.pmodal__body p:not(.pmodal__summary) { color: var(--text-2); }
+.pmodal__list { display: flex; flex-wrap: wrap; gap: 8px; }
+.pmodal__list li { padding: 7px 14px; border-radius: 999px; font-size: 13.5px; border: 1px solid var(--border); background: var(--surface); color: var(--text-2); }
+.pmodal__foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); }
+.pmodal__nav { display: flex; gap: 10px; }
+
+/* ---------- Floating WhatsApp ---------- */
+.wa-fab {
+  position: fixed; right: 20px; bottom: 20px; z-index: 80;
+  display: inline-flex; align-items: center; gap: 10px;
+  height: 56px; padding: 0 20px 0 16px; border-radius: 999px;
+  background: #25d366; color: #fff;
+  font: 600 15px/1 var(--font-body);
+  box-shadow: 0 16px 36px -12px rgba(37, 211, 102, .75), inset 0 1px 0 rgba(255,255,255,.3);
+  transform: translateY(140%) scale(.9); opacity: 0;
+  transition: transform .5s var(--ease), opacity .4s, box-shadow .3s;
+}
+.wa-fab.is-visible { transform: none; opacity: 1; }
+body.modal-open .wa-fab, body.menu-open .wa-fab { opacity: 0; pointer-events: none; }
+.wa-fab:hover { box-shadow: 0 20px 44px -12px rgba(37, 211, 102, .95); transform: translateY(-2px); }
+.wa-fab svg { width: 26px; height: 26px; flex: none; }
+.wa-fab::before { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 2px solid #25d366; animation: wa-ring 2.6s ease-out infinite; pointer-events: none; }
+@keyframes wa-ring { 0% { transform: scale(1); opacity: .7; } 80%, 100% { transform: scale(1.35); opacity: 0; } }
+
+/* ---------- FAQ ---------- */
+.faq__grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(40px, 6vw, 88px); align-items: start; }
+.faq__intro { position: sticky; top: calc(var(--header-h) + 24px); }
+.faq__intro > p:not(.eyebrow) { color: var(--text-2); margin-top: 20px; max-width: 400px; }
+.faq__cta { margin-top: 28px; }
+.faq__list { display: grid; gap: 12px; }
+.faq__item {
+  border: 1px solid var(--border); border-radius: 20px; background: var(--surface);
+  transition: border-color .35s, background-color .35s, box-shadow .35s;
+}
+.faq__item:hover { border-color: color-mix(in srgb, var(--violet-500) 30%, var(--border)); }
+.faq__item.is-open { border-color: var(--border-strong); background: radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--violet-600) 14%, transparent), transparent 60%), var(--surface); box-shadow: 0 20px 50px -30px var(--glow); }
+.faq__item h3 { margin: 0; font-size: inherit; }
+.faq__q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 20px 22px; text-align: left; font: 600 17px/1.4 var(--font-head); letter-spacing: -.01em; color: var(--text); border-radius: 20px; }
+.faq__icon { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: var(--accent); border: 1px solid var(--border-strong); transition: transform .45s var(--ease), background-color .3s, color .3s, border-color .3s; }
+.faq__icon .icon { width: 16px; height: 16px; }
+.faq__item.is-open .faq__icon { transform: rotate(135deg); background: var(--grad); color: #fff; border-color: transparent; }
+.faq__a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s var(--ease); }
+.faq__a > div { overflow: hidden; }
+.faq__item.is-open .faq__a { grid-template-rows: 1fr; }
+.faq__a p { padding: 0 22px 22px; color: var(--text-2); max-width: 640px; }
+
+/* ---------- Responsive for interaction layer ---------- */
+@media (max-width: 1060px) {
+  .faq__grid { grid-template-columns: 1fr; }
+  .faq__intro { position: static; }
+}
+@media (max-width: 820px) {
+  .pmodal { width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; }
+  .pmodal__inner { grid-template-columns: 1fr; height: 100dvh; max-height: 100dvh; border-radius: 0; border: 0; overflow-y: auto; display: block; }
+  .pmodal__stage { min-height: 0; aspect-ratio: 4 / 3.6; }
+  .pmodal__body { overflow: visible; padding-bottom: 40px; }
+  .pmodal__close { position: fixed; }
+  .pmodal__meta { grid-template-columns: repeat(3, auto); gap: 10px 22px; }
+  .pmodal__foot .btn { flex: 1 1 auto; }
+}
+@media (max-width: 640px) {
+  .steps::before, .steps::after { display: block; top: 30px; bottom: 30px; left: 29px; right: auto; width: 2px; height: auto; }
+  .steps::before { background: repeating-linear-gradient(180deg, var(--border-strong) 0 6px, transparent 6px 12px); }
+  .steps::after { transform-origin: top; transform: scaleY(var(--progress, 0)); }
+  .wa-fab { right: 16px; bottom: 16px; width: 56px; padding: 0; justify-content: center; }
+  .wa-fab__label { display: none; }
+  .faq__q { font-size: 16px; padding: 18px; }
+  .faq__a p { padding: 0 18px 18px; }
+  .pmodal__meta { grid-template-columns: 1fr 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rotator__word { transition: none; }
+  .wa-fab::before, .project__media, .about__photo, .portrait__frame, .pmodal__stage { animation: none; }
+  .js img.blur-up { filter: none; }
 }

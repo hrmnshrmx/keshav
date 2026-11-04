@@ -53,7 +53,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/img/hero.webp" fetchpriority="high">
-  <link rel="stylesheet" href="css/style.css?v=a3499fbd">
+  <link rel="stylesheet" href="css/style.css?v=0b135bf0">
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -118,9 +118,14 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How long does a project take?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on the scope. A logo usually takes 5–7 working days, a full brand identity 2–3 weeks, and a social media pack 3–5 days. You'll get a clear timeline before we start."}}, {"@type": "Question", "name": "How many revisions are included?", "acceptedAnswer": {"@type": "Answer", "text": "Every project includes 2–3 rounds of revisions, so there's room to refine the design until it feels right. Extra rounds are available if needed."}}, {"@type": "Question", "name": "What files will I receive?", "acceptedAnswer": {"@type": "Answer", "text": "You get everything you need: AI, SVG, PDF, PNG and JPG files, organised and named clearly. Brand projects also include a brand guidelines PDF, and print work comes print-ready with bleed."}}, {"@type": "Question", "name": "How much does a design project cost?", "acceptedAnswer": {"@type": "Answer", "text": "Pricing depends on what you need. Share a short brief and I'll send a fixed quote within 24 hours, with no hidden costs or surprises later."}}, {"@type": "Question", "name": "Do you work with clients outside Chandigarh?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. I work remotely with clients across India and abroad, collaborating over WhatsApp, Google Meet and email."}}, {"@type": "Question", "name": "How do payments work?", "acceptedAnswer": {"@type": "Answer", "text": "Usually 50% upfront to book the project and 50% before the final files are delivered. UPI and bank transfer are accepted, and PayPal for international clients."}}, {"@type": "Question", "name": "Do I own the final design?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Once the final payment is made, you get full ownership and usage rights for the approved design."}}, {"@type": "Question", "name": "Can you help with printing?", "acceptedAnswer": {"@type": "Answer", "text": "I prepare print-ready files to the printer's specs and can coordinate with trusted local printers for cards, packaging, banners and more."}}]}
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+  <div class="cursor is-out" id="cursor" aria-hidden="true"><span class="cursor__ring"><span class="cursor__label">View</span></span><span class="cursor__dot"></span></div>
 
   <!-- ============ SVG sprite ============ -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -151,6 +156,9 @@
     <symbol id="i-instagram" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r=".9" fill="currentColor" stroke="none"/></g></symbol>
     <symbol id="i-behance" viewBox="0 0 24 24"><path fill="currentColor" d="M8.2 11.4c.9-.4 1.5-1.2 1.5-2.4C9.7 7 8.3 6 6.3 6H1.5v12h5c2.2 0 3.9-1.1 3.9-3.4 0-1.5-.8-2.7-2.2-3.2ZM3.8 8h2.1c.9 0 1.5.4 1.5 1.3 0 1-.7 1.3-1.6 1.3h-2V8Zm2.4 8H3.8v-3.4h2.4c1.1 0 1.8.5 1.8 1.7S7.2 16 6.2 16ZM15 7.3h5v1.3h-5V7.3Zm2.6 2.6c-2.7 0-4.4 1.9-4.4 4.3 0 2.6 1.6 4.3 4.4 4.3 2.1 0 3.4-.9 4-2.9h-2.1c-.2.7-1 1.1-1.8 1.1-1.3 0-2-.8-2-2.1h6.1c.2-2.7-1.3-4.7-4.2-4.7Zm-1.9 3.4c.1-1.1.8-1.8 1.8-1.8 1.1 0 1.7.7 1.8 1.8h-3.6Z"/></symbol>
     <symbol id="i-dribbble" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M8.5 3.7C12 8 14.5 13.5 15.6 20.2M3.1 10.5c4.8.4 10.3-.6 14.4-3.9M5.2 18.1c3.5-4.2 8.6-5.4 15.7-4"/></g></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2a9.8 9.8 0 0 0-8.4 14.9L2.3 21.8l4.8-1.3A9.8 9.8 0 1 0 12 2.2Zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20Zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8.9c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.8 2c0 1.2.9 2.3 1 2.5.1.2 1.7 2.6 4.1 3.6 1.5.7 2.1.7 2.9.6.5-.1 1.4-.6 1.6-1.2.2-.6.2-1 .1-1.2l-.4-.2Z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
     <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M5 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM3.3 9h3.4v11.5H3.3V9Zm5.6 0h3.3v1.6c.5-.9 1.7-1.9 3.5-1.9 3.6 0 4.3 2.4 4.3 5.4v6.4h-3.4v-5.7c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.8H8.9V9Z"/></symbol>
   </svg>
 
@@ -198,7 +206,8 @@
         <li><a href="#work"><span>04</span>Work</a></li>
         <li><a href="#process"><span>05</span>Process</a></li>
         <li><a href="#testimonials"><span>06</span>Testimonials</a></li>
-        <li><a href="#contact"><span>07</span>Contact</a></li>
+        <li><a href="#faq"><span>07</span>FAQ</a></li>
+        <li><a href="#contact"><span>08</span>Contact</a></li>
       </ul>
     </nav>
     <div class="mobile-menu__foot">
@@ -219,7 +228,7 @@
           <h1 class="hero__title reveal" data-delay="1">
             <span class="nowrap">Graphic Designer</span><br>
             crafting visuals<br>
-            <span class="accent-serif">for brands<span class="hero__dot">.</span></span>
+            <span class="hero__for"><span class="accent-serif">for</span> <span class="rotator" id="rotator" aria-hidden="true"><span class="rotator__word is-active">brands.</span><span class="rotator__word">startups.</span><span class="rotator__word">creators.</span><span class="rotator__word">cafés.</span></span><span class="sr-only">brands, startups, creators and cafés.</span></span>
             <svg class="swash" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 17C70 6 170 3 296 9" fill="none" stroke="url(#g-brand)" stroke-width="5" stroke-linecap="round"/></svg>
           </h1>
           <p class="hero__lead reveal" data-delay="2">I'm <strong>Keshav Sharma</strong>, a graphic designer based in Chandigarh. I design bold, modern and meaningful visuals that help brands stand out, tell their story, and connect with the right audience.</p>
@@ -378,7 +387,7 @@
         </div>
 
         <div class="work__grid">
-          <article class="project project--wide reveal" data-cat="brand">
+          <article class="project project--wide reveal" data-cat="brand" data-project="alvora" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open project: Alvora Skincare">
             <div class="project__media"><img src="assets/img/work-alvora.webp" width="384" height="351" alt="Alvora Skincare tote bag with gold logo" loading="lazy" decoding="async"></div>
             <div class="project__info">
               <span class="tag">Brand Identity</span>
@@ -387,7 +396,7 @@
             </div>
             <span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
           </article>
-          <article class="project reveal" data-delay="1" data-cat="social">
+          <article class="project reveal" data-delay="1" data-cat="social" data-project="brew" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open project: The Brew House">
             <div class="project__media"><img src="assets/img/work-brew.webp" width="384" height="351" alt="The Brew House launch post on a phone" loading="lazy" decoding="async"></div>
             <div class="project__info">
               <span class="tag">Social Media</span>
@@ -396,7 +405,7 @@
             </div>
             <span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
           </article>
-          <article class="project reveal" data-cat="print">
+          <article class="project reveal" data-cat="print" data-project="urban" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open project: Urban Edge">
             <div class="project__media"><img src="assets/img/work-urban.webp" width="384" height="351" alt="Urban Edge magazine cover" loading="lazy" decoding="async"></div>
             <div class="project__info">
               <span class="tag">Print Design</span>
@@ -488,6 +497,54 @@
               <figcaption><span class="avatar" style="--h:285">NG</span><span><strong>Neha Gill</strong><small>Editor, Urban Edge</small></span><span class="stars" aria-label="5 out of 5 stars">★★★★★</span></figcaption>
             </figure>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section faq" id="faq">
+      <div class="container faq__grid">
+        <div class="faq__intro">
+          <p class="eyebrow reveal">FAQ</p>
+          <h2 class="section-title reveal">Questions, <span class="accent-serif">answered.</span></h2>
+          <p class="reveal">Everything you might want to know before we start. Can't find your answer? Just ask, I usually reply within a few hours.</p>
+          <div class="faq__cta reveal">
+            <a href="#contact" class="btn btn--primary">Ask a question <svg class="icon"><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+        <div class="faq__list">
+            <div class="faq__item reveal">
+              <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a1" id="faq-q1"><span>How long does a project take?</span><span class="faq__icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span></button></h3>
+              <div class="faq__a" id="faq-a1" role="region" aria-labelledby="faq-q1"><div><p>It depends on the scope. A logo usually takes 5–7 working days, a full brand identity 2–3 weeks, and a social media pack 3–5 days. You'll get a clear timeline before we start.</p></div></div>
+            </div>
+            <div class="faq__item reveal">
+              <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a2" id="faq-q2"><span>How many revisions are included?</span><span class="faq__icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span></button></h3>
+              <div class="faq__a" id="faq-a2" role="region" aria-labelledby="faq-q2"><div><p>Every project includes 2–3 rounds of revisions, so there's room to refine the design until it feels right. Extra rounds are available if needed.</p></div></div>
+            </div>
+            <div class="faq__item reveal">
+              <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3"><span>What files will I receive?</span><span class="faq__icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span></button></h3>
+              <div class="faq__a" id="faq-a3" role="region" aria-labelledby="faq-q3"><div><p>You get everything you need: AI, SVG, PDF, PNG and JPG files, organised and named clearly. Brand projects also include a brand guidelines PDF, and print work comes print-ready with bleed.</p></div></div>
+            </div>
+            <div class="faq__item reveal">
+              <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a4" id="faq-q4"><span>How much does a design project cost?</span><span class="faq__icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span></button></h3>
+              <div class="faq__a" id="faq-a4" role="region" aria-labelledby="faq-q4"><div><p>Pricing depends on what you need. Share a short brief and I'll send a fixed quote within 24 hours, with no hidden costs or surprises later.</p></div></div>
+            </div>
+            <div class="faq__item reveal">
+              <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a5" id="faq-q5"><span>Do you work with clients outside Chandigarh?</span><span class="faq__icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span></button></h3>
+              <div class="faq__a" id="faq-a5" role="region" aria-labelledby="faq-q5"><div><p>Yes. I work remotely with clients across India and abroad, collaborating over WhatsApp, Google Meet and email.</p></div></div>
+            </div>
+            <div class="faq__item reveal">
+              <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a6" id="faq-q6"><span>How do payments work?</span><span class="faq__icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span></button></h3>
+              <div class="faq__a" id="faq-a6" role="region" aria-labelledby="faq-q6"><div><p>Usually 50% upfront to book the project and 50% before the final files are delivered. UPI and bank transfer are accepted, and PayPal for international clients.</p></div></div>
+            </div>
+            <div class="faq__item reveal">
+              <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a7" id="faq-q7"><span>Do I own the final design?</span><span class="faq__icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span></button></h3>
+              <div class="faq__a" id="faq-a7" role="region" aria-labelledby="faq-q7"><div><p>Yes. Once the final payment is made, you get full ownership and usage rights for the approved design.</p></div></div>
+            </div>
+            <div class="faq__item reveal">
+              <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a8" id="faq-q8"><span>Can you help with printing?</span><span class="faq__icon" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span></button></h3>
+              <div class="faq__a" id="faq-a8" role="region" aria-labelledby="faq-q8"><div><p>I prepare print-ready files to the printer's specs and can coordinate with trusted local printers for cards, packaging, banners and more.</p></div></div>
+            </div>
         </div>
       </div>
     </section>
@@ -595,7 +652,7 @@
           <h3>Quick Links</h3>
           <ul>
             <li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#services">Services</a></li><li><a href="#work">Work</a></li>
-            <li><a href="#process">Process</a></li><li><a href="#testimonials">Testimonials</a></li><li><a href="#contact">Contact</a></li>
+            <li><a href="#process">Process</a></li><li><a href="#testimonials">Testimonials</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
         <div class="footer__col">
@@ -624,6 +681,88 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=b68f77d3" defer></script>
+  <!-- Project viewer -->
+  <dialog class="pmodal" id="projectModal" aria-labelledby="pmTitle">
+    <div class="pmodal__inner">
+      <button class="pmodal__close round-btn" type="button" id="pmClose" aria-label="Close project"><svg class="icon"><use href="#i-close"/></svg></button>
+      <div class="pmodal__media">
+        <div class="pmodal__stage"><img id="pmImage" src="" alt=""></div>
+        <div class="pmodal__thumbs" id="pmThumbs"></div>
+      </div>
+      <div class="pmodal__body">
+        <span class="tag" id="pmTag"></span>
+        <h2 id="pmTitle"></h2>
+        <dl class="pmodal__meta">
+          <div><dt>Client</dt><dd id="pmClient"></dd></div>
+          <div><dt>Year</dt><dd id="pmYear"></dd></div>
+          <div><dt>Service</dt><dd id="pmService"></dd></div>
+        </dl>
+        <p class="pmodal__summary" id="pmSummary"></p>
+        <h3>The challenge</h3>
+        <p id="pmChallenge"></p>
+        <h3>The solution</h3>
+        <p id="pmSolution"></p>
+        <h3>Deliverables</h3>
+        <ul class="pmodal__list" id="pmDeliverables"></ul>
+        <div class="pmodal__foot">
+          <a href="#contact" class="btn btn--primary" id="pmCta">Start a similar project <svg class="icon"><use href="#i-arrow"/></svg></a>
+          <div class="pmodal__nav">
+            <button class="round-btn" type="button" id="pmPrev" aria-label="Previous project"><svg class="icon"><use href="#i-left"/></svg></button>
+            <button class="round-btn" type="button" id="pmNext" aria-label="Next project"><svg class="icon"><use href="#i-right"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Floating WhatsApp: put the number (country code, digits only, e.g. 919812345678) in data-whatsapp -->
+  <a class="wa-fab" id="waFab" href="#contact" data-whatsapp="" data-message="Hi Keshav! I found your portfolio and would like to discuss a design project." aria-label="Chat on WhatsApp">
+    <svg><use href="#i-whatsapp"/></svg>
+    <span class="wa-fab__label">Chat with me</span>
+  </a>
+
+  <!-- Project details shown in the project viewer (edit text/images here) -->
+  <script type="application/json" id="projectData">
+  {
+    "alvora": {
+      "title": "Alvora Skincare",
+      "tag": "Brand Identity",
+      "client": "Alvora Skincare",
+      "year": "2025",
+      "service": "Branding & packaging",
+      "summary": "A quiet-luxury identity for a clean skincare label: botanical monogram, gold foil and a muted palette.",
+      "challenge": "Alvora needed to stand out on crowded shelves while feeling calm, natural and premium enough to justify its price.",
+      "solution": "A hand-drawn botanical monogram paired with a refined serif wordmark, a deep charcoal and gold palette, and minimal packaging that lets the product breathe.",
+      "deliverables": ["Logo & monogram", "Colour & typography system", "Packaging & tote bag", "Brand guidelines"],
+      "images": ["assets/img/work-alvora.webp"]
+    },
+    "brew": {
+      "title": "The Brew House",
+      "tag": "Social Media",
+      "client": "The Brew House Café",
+      "year": "2025",
+      "service": "Social media campaign",
+      "summary": "A launch campaign and content system for a neighbourhood café.",
+      "challenge": "A new café needed to build buzz before opening day and keep a consistent look across weekly posts without a big budget.",
+      "solution": "A bold, warm template system with punchy type and product-first photography, plus a countdown series and an editable kit the team can reuse every week.",
+      "deliverables": ["Launch campaign", "Post & story templates", "Menu highlights", "Opening-day creatives"],
+      "images": ["assets/img/work-brew.webp"]
+    },
+    "urban": {
+      "title": "Urban Edge",
+      "tag": "Print Design",
+      "client": "Urban Edge Magazine",
+      "year": "2024",
+      "service": "Editorial & cover design",
+      "summary": "Cover and editorial design for a streetwear culture magazine.",
+      "challenge": "The magazine wanted a cover that grabs attention on newsstands and social media at the same time.",
+      "solution": "An oversized, cropped masthead layered behind the cover star, a saturated violet colour story and tight editorial grids inside.",
+      "deliverables": ["Cover design", "Editorial layouts", "Social teasers", "Print-ready files"],
+      "images": ["assets/img/work-urban.webp"]
+    }
+  }
+  </script>
+
+  <script src="js/main.js?v=e304c8d5" defer></script>
 </body>
 </html>
