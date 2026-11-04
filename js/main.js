@@ -65,7 +65,23 @@
     }
   }
   burger.addEventListener('click', function () { setMenu(burger.getAttribute('aria-expanded') !== 'true'); });
-  $$('a', menu).forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+  /* Menu links: unlock page scroll first, then scroll on the next frames. Doing both in the
+     same tick lets some mobile browsers (iOS Safari, some Android builds) cancel the scroll. */
+  $$('a', menu).forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var href = a.getAttribute('href') || '';
+      var target = href.charAt(0) === '#' && href.length > 1 ? document.querySelector(href) : null;
+      if (!target) { setMenu(false); return; }
+      e.preventDefault();
+      setMenu(false);
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+          if (history.replaceState) history.replaceState(null, '', href);
+        });
+      });
+    });
+  });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') { setMenu(false); burger.focus(); } });
   window.addEventListener('resize', function () { if (window.innerWidth > 1060 && burger.getAttribute('aria-expanded') === 'true') setMenu(false); });
 
