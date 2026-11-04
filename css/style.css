@@ -756,6 +756,14 @@ nav.footer__col ul { grid-template-columns: 1fr 1fr; column-gap: 20px; }
   border-radius: 0 3px 3px 0;
   will-change: transform;
 }
+/* Native, compositor-driven progress (Chrome, Edge, Safari 26+): perfectly in sync with scrolling */
+@supports (animation-timeline: scroll()) {
+  .scroll-progress span {
+    animation: progress-grow linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@keyframes progress-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* ---------- Rotating headline word ---------- */
 .hero__for { white-space: nowrap; }

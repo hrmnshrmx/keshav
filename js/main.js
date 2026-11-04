@@ -345,20 +345,33 @@
   });
 
   /* ---------- Scroll progress line ---------- */
+  /* Browsers with CSS scroll-driven animations animate the bar natively on the compositor
+     (see .scroll-progress in style.css). Others get a JS fallback that eases toward the
+     target every frame, so the bar glides instead of jumping between scroll events. */
   var progressBar = $('#scrollProgress');
-  var progressTick = false;
-  function updateProgress() {
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    var p = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
-    progressBar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
-    progressTick = false;
-  }
-  if (progressBar) {
-    updateProgress();
-    window.addEventListener('scroll', function () {
-      if (!progressTick) { progressTick = true; requestAnimationFrame(updateProgress); }
-    }, { passive: true });
-    window.addEventListener('resize', updateProgress);
+  var nativeProgress = window.CSS && CSS.supports && CSS.supports('animation-timeline: scroll()');
+  if (progressBar && !nativeProgress) {
+    var progressTarget = 0, progressCurrent = 0, progressRunning = false;
+    function readProgress() {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      progressTarget = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
+    }
+    function animateProgress() {
+      var diff = progressTarget - progressCurrent;
+      progressCurrent = Math.abs(diff) < 0.0005 ? progressTarget : progressCurrent + diff * 0.22;
+      progressBar.style.transform = 'scaleX(' + progressCurrent + ')';
+      if (progressCurrent !== progressTarget) requestAnimationFrame(animateProgress);
+      else progressRunning = false;
+    }
+    function kickProgress() {
+      readProgress();
+      if (!progressRunning) { progressRunning = true; requestAnimationFrame(animateProgress); }
+    }
+    readProgress();
+    progressCurrent = progressTarget;
+    progressBar.style.transform = 'scaleX(' + progressCurrent + ')';
+    window.addEventListener('scroll', kickProgress, { passive: true });
+    window.addEventListener('resize', kickProgress);
   }
 
   /* ---------- Rotating headline word ---------- */
