@@ -710,7 +710,6 @@ nav.footer__col ul { grid-template-columns: 1fr 1fr; column-gap: 20px; }
   .project--cta::before { font-size: 40px; top: 20px; right: 22px; }
   .t-card figcaption { flex-wrap: wrap; }
   .t-card .stars { margin-left: 64px; width: 100%; }
-  .slider-controls { margin-top: 24px; }
   .form__row { grid-template-columns: 1fr; }
   .contact__panel { border-radius: 26px; }
   .footer__grid { grid-template-columns: 1fr; gap: 32px; }
@@ -888,7 +887,7 @@ body.modal-open { overflow: hidden; }
 .wa-fab.is-visible { transform: none; opacity: 1; }
 body.modal-open .wa-fab, body.menu-open .wa-fab { opacity: 0; pointer-events: none; }
 .wa-fab:hover { box-shadow: 0 20px 44px -12px rgba(37, 211, 102, .95); transform: translateY(-2px); }
-.wa-fab svg { width: 26px; height: 26px; flex: none; }
+.wa-fab svg { width: 30px; height: 30px; flex: none; }
 .wa-fab::before { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 2px solid #25d366; animation: wa-ring 2.6s ease-out infinite; pointer-events: none; }
 @keyframes wa-ring { 0% { transform: scale(1); opacity: .7; } 80%, 100% { transform: scale(1.35); opacity: 0; } }
 
@@ -937,6 +936,20 @@ body.modal-open .wa-fab, body.menu-open .wa-fab { opacity: 0; pointer-events: no
   .faq__q { font-size: 16px; padding: 18px; }
   .faq__a p { padding: 0 18px 18px; }
   .pmodal__meta { grid-template-columns: 1fr 1fr; }
+}
+
+/* Testimonials on single-column layouts: controls centred under the card ( ←  • • • •  → ) */
+@media (max-width: 1060px) {
+  .testimonials__grid { row-gap: 0; }
+  .testimonials__intro { display: contents; }
+  .testimonials .slider { order: 3; margin-top: 32px; }
+  .slider-controls { order: 4; justify-content: center; gap: 16px; margin-top: 24px; }
+  .slider-controls #tPrev { order: 1; }
+  .slider-dots { order: 2; margin: 0 6px; }
+  .slider-controls #tNext { order: 3; }
+}
+@media (max-width: 640px) {
+  .wa-fab svg { width: 34px; height: 34px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
